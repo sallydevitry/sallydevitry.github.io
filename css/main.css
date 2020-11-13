@@ -254,3 +254,8 @@ p {
 .font-weight-light {
   font-weight: 100 !important;
 }
+
+.scrolly {
+  height:200px;
+  overflow-y: scroll;
+}
