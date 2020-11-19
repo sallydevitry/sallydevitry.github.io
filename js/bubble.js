@@ -1,21 +1,22 @@
 class Bubble {
-  constructor() {
-  }
-
   draw(dataset) {
     var diameter = 600;
-    var color = d3.scaleOrdinal(d3.schemeCategory20);
+    var color = d3.scaleOrdinal(d3.schemeCategory10);
     var bubble = d3.pack(dataset)
         .size([diameter, diameter])
         .padding(1.5);
-    var svg = d3.select("myAreaChart")
+    var svg = d3.select("#myAreaChart")
         .append("svg")
         .attr("width", diameter)
         .attr("height", diameter)
         .attr("class", "bubble");
 
     var nodes = d3.hierarchy(dataset)
-        .sum(function(d) { return d['Starting Median Salary']; });
+        .sum(function(d) {
+          console.log(d);
+          console.log(d['Starting Median Salary']);
+          return d['Starting Median Salary'];
+        });
 
     var node = svg.selectAll(".node")
         .data(bubble(nodes).descendants())
@@ -61,7 +62,5 @@ class Bubble {
             return d.r/5;
         })
         .attr("fill", "white");
-    d3.select(self.frameElement)
-        .style("height", diameter + "px");
   }
 }
