@@ -264,3 +264,18 @@ p {
   display: flex;
   flex-direction: row;
 }
+.Southern {
+  fill: darkred;
+}
+.NorthEast{
+  fill: darkblue;
+}
+.MidWest{
+  fill:darkgreen;
+}
+.Western{
+  fill:darkkhaki;
+}
+.California{
+  fill:antiquewhite;
+}
