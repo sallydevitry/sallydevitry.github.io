@@ -1,5 +1,8 @@
 class Bubble {
-  draw(dataset) {
+  draw(raw_dataset) {
+    var dataset = new Object();
+    dataset['children'] = [];
+    raw_dataset.forEach((row) => dataset['children'].push({'Starting Median Salary':Number(row['Starting Median Salary'].replace(/[^0-9.-]+/g,"")), 'Undergraduate Major': row['Undergraduate Major']}));
     var diameter = 600;
     var color = d3.scaleOrdinal(d3.schemeCategory10);
     var bubble = d3.pack(dataset)
@@ -13,8 +16,6 @@ class Bubble {
 
     var nodes = d3.hierarchy(dataset)
         .sum(function(d) {
-          console.log(d);
-          console.log(d['Starting Median Salary']);
           return d['Starting Median Salary'];
         });
 
