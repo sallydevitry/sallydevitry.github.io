@@ -1,5 +1,14 @@
 class Bubble {
-  draw(dataset) {
+  constructor() {
+  }
+
+  draw(raw_dataset) {
+    var dataset = new Object();
+    dataset['children'] = [];
+    raw_dataset.forEach((row) => dataset['children'].push({
+      'Starting Median Salary':Number(row['Starting Median Salary'].replace(/[^0-9.-]+/g,"")),
+      'Undergraduate Major': row['Undergraduate Major']
+    }));
     var diameter = 600;
     var color = d3.scaleOrdinal(d3.schemeCategory10);
     var bubble = d3.pack(dataset)
@@ -13,8 +22,6 @@ class Bubble {
 
     var nodes = d3.hierarchy(dataset)
         .sum(function(d) {
-          console.log(d);
-          console.log(d['Starting Median Salary']);
           return d['Starting Median Salary'];
         });
 
@@ -41,7 +48,7 @@ class Bubble {
             return color(i);
         });
     node.append("text")
-        .attr("dy", ".2em")
+        .attr("dy", ".3em")
         .style("text-anchor", "middle")
         .text(function(d) {
             return d.data['Undergraduate Major'].substring(0, d.r / 3);
@@ -51,11 +58,16 @@ class Bubble {
             return d.r/5;
         })
         .attr("fill", "white");
+    var formatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 0
+    });
     node.append("text")
         .attr("dy", "1.3em")
         .style("text-anchor", "middle")
         .text(function(d) {
-            return d.data['Starting Median Salary'];
+            return formatter.format(d.data['Starting Median Salary']);
         })
         .attr("font-family",  "Gill Sans", "Gill Sans MT")
         .attr("font-size", function(d){
