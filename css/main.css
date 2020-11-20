@@ -30,6 +30,14 @@ p {
   line-height: 1;
   font-family: 'Raleway';
 }
+.site-subheading {
+  margin-top: 4px;
+  margin-bottom: 2px;
+  text-transform: uppercase;
+  font-family: 'Raleway';
+  line-height: 1;
+  font-weight: 100;
+}
 
 .site-heading .site-heading-upper {
   display: block;
@@ -263,4 +271,34 @@ p {
 .flexRow {
   display: flex;
   flex-direction: row;
+}
+
+.flexRowSpace {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.boxPlot {
+  padding-left: 50px;
+}
+
+line{
+  stroke: #064789;
+  stroke-width: 2;
+}
+.Southern {
+  fill: darkred;
+}
+.NorthEast{
+  fill: darkblue;
+}
+.MidWest{
+  fill:darkgreen;
+}
+.Western{
+  fill:darkkhaki;
+}
+.California{
+  fill:antiquewhite;
 }

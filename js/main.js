@@ -7,6 +7,7 @@ function init() {
             bubbleChart = new Bubble();
             bubbleChart.draw(degreeData);
             //call draw map
+            fMap = new FilterMap(d3.select('#mapSVG'))
             //call draw table
         })
     })
