@@ -26,6 +26,9 @@ function showSchoolDetails(data) {
     textDeetsDiv.append('text').text("Average ACT score range: ")
     textDeetsDiv.append('text').text(data['ACT Lower'] + "-" + data['ACT Upper'])
     textDeetsDiv.append('br')
+    textDeetsDiv.append('text').text('Location: ')
+    textDeetsDiv.append('text').text(data['City'] + ", " + data['State'])
+    textDeetsDiv.append('br')
     textDeetsDiv.append('br')
 
     chartDiv = currDiv.append('div').attr('class', 'boxPlot')
