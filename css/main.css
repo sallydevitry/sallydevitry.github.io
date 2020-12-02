@@ -308,3 +308,10 @@ line{
   margin-bottom: 10px;
   margin-top: 8px;
 }
+
+#searchbox-filter {
+  background-image: url('../img/search-icon-smaller.png');
+  background-position: 2px 3px;
+  background-repeat: no-repeat;
+  padding: 8px 10px 8px 32px;
+}
