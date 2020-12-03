@@ -29,19 +29,30 @@ function showHideSchoolDetails(data) {
     }
     else {
         currDiv = detailPanel.append('div').attr('class', 'flexRow').attr('id', `div${stripSpaces(data.Name)}`)
-        textDeetsDiv = currDiv.append('div')
-        textDeetsDiv.append('text').style('font-weight', 'bold').text(data.Name)
-        textDeetsDiv.append('br')
-        textDeetsDiv.append('text').text("Student Population: ")
-        textDeetsDiv.append('text').text(data['Student Population'])
-        textDeetsDiv.append('br')
-        textDeetsDiv.append('text').text("Average ACT score range: ")
-        textDeetsDiv.append('text').text(data['ACT Lower'] + "-" + data['ACT Upper'])
+
+        
+
+        textDeetsDiv = currDiv.append('div').style('margin-left', '10px')
+        textDeetsDiv.append('text').style('font-weight', 'bold').style('font-size', '20px').text(data.Name)
         textDeetsDiv.append('br')
         textDeetsDiv.append('text').text('Location: ')
         textDeetsDiv.append('text').text(data['City'] + ", " + data['State'])
         textDeetsDiv.append('br')
+        textDeetsDiv.append('text').text("Student Population: ")
+        textDeetsDiv.append('text').text(data['Student Population'])
         textDeetsDiv.append('br')
+        textDeetsDiv.append('text').text("Average ACT score: ")
+        textDeetsDiv.append('text').text(data['ACT Lower'] + "-" + data['ACT Upper'])
+        textDeetsDiv.append('br')
+        textDeetsDiv.append('text').text("Acceptance rate: ")
+        textDeetsDiv.append('text').text(data['Acceptance Rate'] + '%')
+        textDeetsDiv.append('br')
+        textDeetsDiv.append('text').text("Net Cost: ")
+        textDeetsDiv.append('text').text('$' + data['Net Price'])
+        textDeetsDiv.append('br')
+
+        imgDiv = currDiv.append('div')
+        imgDiv.append('img').attr('src', `../img/${stripSpaces(data.Name)}.jpg`).attr('class', 'school-imgs')
 
         chartDiv = currDiv.append('div').attr('class', 'boxPlot')
 
@@ -54,10 +65,10 @@ function showHideSchoolDetails(data) {
 
         //box plot
         width = 600
-        height = 150
-        boxWidth = 65
-        lilLineStart = 20
-        lilLineEnd = 50
+        height = 200
+        boxWidth = 100
+        lilLineStart = 28
+        lilLineEnd = 84
 
         // Create the axis
         var svg = chartDiv.append('svg')
@@ -70,7 +81,7 @@ function showHideSchoolDetails(data) {
             .range([0, width - 30])
 
         var x_axis = d3.axisBottom(xScale)
-        axisG = svg.append('g').attr('transform', 'translate(10, 100)')
+        axisG = svg.append('g').attr('transform', 'translate(10, 130)')
         axisG.call(x_axis)
 
         //actual box plot
@@ -115,6 +126,7 @@ function showHideSchoolDetails(data) {
             .attr("stroke-width", 2)
             .attr("stroke", "#064789")
             .style('fill', 'none')
+
     }
 }
 

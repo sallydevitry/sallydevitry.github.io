@@ -281,6 +281,9 @@ p {
 
 .boxPlot {
   padding-left: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 line{
@@ -314,4 +317,17 @@ line{
   background-position: 2px 3px;
   background-repeat: no-repeat;
   padding: 8px 10px 8px 32px;
+}
+
+.school-imgs {
+  max-height: 160px;
+  max-width: 260px;
+  border: 2px solid gray;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  margin-left: 8px;
+}
+
+.school-imgs:hover {
+  box-shadow: 10px 10px 5px #ccc;
 }
