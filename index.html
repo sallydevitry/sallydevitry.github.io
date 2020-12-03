@@ -45,6 +45,7 @@
           <div id=other-filters>
             <label>Type of School</label>
             <select class="custom-select my-select">
+              <option>Any</option>
               <option>Party</option>
               <option>Engineering</option>
               <option>Art</option>
@@ -71,12 +72,13 @@
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
           <h6 class="m-0 font-weight-bold text-secondary-blue">Schools</h6>
           <div>
-            <input style="max-height: 20px;" class="form-control" type="text" placeholder="Search" aria-label="Search">
+            <input style="max-height: 28px;" id="searchbox-filter" class="form-control" type="text"
+              onkeyup="filterSchools()" placeholder="Search for schools..." aria-label="Search">
           </div>
         </div>
         <!-- Card Body -->
         <div class="card-body">
-          <div class="scrolly"  style="max-height: 200px;">
+          <div class="scrolly" style="max-height: 300px;">
             <table class="table">
               <thead>
                 <tr>
@@ -99,16 +101,24 @@
       <div class="card shadow mb-4">
         <!-- Card Header -->
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-          <h6 class="m-0 font-weight-bold text-secondary-blue">Detailed Comparison of Selected Schools</h6>
+          <h6 class="m-0 font-weight-bold text-secondary-blue">Details of Selected Schools</h6>
         </div>
         <!-- Card Body -->
-        <div class="card-body" id='school-details'>
+        <div class="card-body">
+          <div class="flexRowSpace">
+            <p> </p>
+            <p style="padding-right: 35%; text-decoration: underline; font-size: 18px;">Salary Upon Exit</p>
+          </div>
+          <div id='school-details'>
+          </div>
         </div>
       </div>
     </div>
-    <div class="mx-auto my-auto mb-4" style="background-color: rgba(32, 72, 126, 0.80);">
-      <h3>
-        <span class="site-heading-upper text-primary mb-2">Degree Exploration</span>
+
+    <div class="w-100 site-subheading" style="background-color: rgba(32, 72, 126, 0.90)">
+      <h3 class=" text-center text-white">
+        <!-- <span class="site-heading-upper text-primary mb-2">What Should I do with</span> -->
+        <span class="site-heading-lower">Degree Exploration</span>
       </h3>
     </div>
 
