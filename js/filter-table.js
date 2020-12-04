@@ -33,7 +33,7 @@ function showHideSchoolDetails(data) {
         
 
         textDeetsDiv = currDiv.append('div').style('margin-left', '10px')
-        textDeetsDiv.append('text').style('font-weight', 'bold').style('font-size', '20px').text(data.Name)
+        textDeetsDiv.append('a').style('font-weight', 'bold').style('font-size', '20px').attr('href', data.Website).text(data.Name)
         textDeetsDiv.append('br')
         textDeetsDiv.append('text').text('Location: ')
         textDeetsDiv.append('text').text(data['City'] + ", " + data['State'])
