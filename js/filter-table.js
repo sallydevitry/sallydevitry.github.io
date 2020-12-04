@@ -160,4 +160,10 @@ function filterMapSchools(region){
     sel.style('display', '')
     selectedRegions[region] = true;
   }
+  if(selectedRegions[region]){
+    d3.selectAll("." + region).style('fill', 'lightskyblue')
+
+  }else{
+    d3.selectAll("." + region).style('fill', 'darksalmon')
+  }
 }
