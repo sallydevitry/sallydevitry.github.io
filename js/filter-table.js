@@ -4,11 +4,11 @@ function drawTable(rankData) {
         schoolRank = d.Rank
         schoolTuition = d['Total Annual Cost']
         schoolsTable = d3.select("#schools-table")
-        tableRow = schoolsTable.append('tr')
+        tableRow = schoolsTable.append('tr').attr('class', stripSpaces(d['School Type'])).attr('class', 't' + schoolTuition)
         tableRow.append('td').append('input').attr('type', 'checkbox').attr('id', `check${stripSpaces(schoolName)}`).on('click', () => showHideSchoolDetails(d))
         tableRow.append('td').append('text').text(schoolName)
         tableRow.append('td').append('text').text(schoolRank)
-        tableRow.append('td').append('text').text(schoolTuition)
+        tableRow.append('td').append('text').attr('class', 'school-tuition').text(schoolTuition)
     })
 }
 function stripSpaces(schoolName) {
@@ -30,10 +30,10 @@ function showHideSchoolDetails(data) {
     else {
         currDiv = detailPanel.append('div').attr('class', 'flexRow').attr('id', `div${stripSpaces(data.Name)}`)
 
-        
 
-        textDeetsDiv = currDiv.append('div').style('margin-left', '10px')
-        textDeetsDiv.append('a').style('font-weight', 'bold').style('font-size', '20px').attr('href', data.Website).text(data.Name)
+
+        textDeetsDiv = currDiv.append('div').style('margin-left', '10px').style('min-width', '150px')
+        textDeetsDiv.append('a').style('font-weight', 'bold').style('font-size', '20px').attr('target', '_blank').attr('href', 'https://' + data.Website).text(data.Name)
         textDeetsDiv.append('br')
         textDeetsDiv.append('text').text('Location: ')
         textDeetsDiv.append('text').text(data['City'] + ", " + data['State'])
@@ -51,7 +51,7 @@ function showHideSchoolDetails(data) {
         textDeetsDiv.append('text').text('$' + data['Net Price'])
         textDeetsDiv.append('br')
 
-        imgDiv = currDiv.append('div')
+        imgDiv = currDiv.append('a').attr('target', '_blank').attr('href', 'https://' + data.Website)
         imgDiv.append('img').attr('src', `../img/${stripSpaces(data.Name)}.jpg`).attr('class', 'school-imgs')
 
         chartDiv = currDiv.append('div').attr('class', 'boxPlot')
@@ -145,5 +145,59 @@ function filterSchools() {
         } else {
             tr[i].style.display = 'none';
         }
+    }
+}
+
+function filterByType() {
+    var typeOfSchool = document.getElementById('type-select').value;
+    schoolsTable = document.getElementById("schools-table");
+    schoolsToShow = document.getElementsByClassName(typeOfSchool)
+    tr = schoolsTable.getElementsByTagName("tr")
+    for (var i = 0; i < tr.length; i++) {
+        tr[i].style.display = 'none';
+    }
+    for (var j = 0; j < schoolsToShow.length; j++) {
+        schoolsToShow[j].style.display = '';
+    }
+}
+
+function filterByTuition() {
+    putAllBackInTable()
+    var tuitionMax = document.getElementById('tuition-select').value;
+    console.log(tuitionMax)
+    schoolsTable = document.getElementById('schools-table');
+    trs = schoolsTable.getElementsByTagName("tr")
+
+    for (i = 0; i < trs.length; i++) {
+        currTr = trs[i];
+        if (tuitionMax === 'Any') {
+            currTr.style.display = ''
+        }
+        else {
+            tuitionMaxStripped = tuitionMax.replace(/</g, '').replace('$', '').replace('+', '').replace(',', '');
+            tuitionCell = currTr.querySelector('td > .school-tuition')
+            classOfCurr = tuitionCell.innerText.replace('t', '');
+            tuitionNum = parseInt(classOfCurr);
+
+            if (tuitionMax.includes('+')) {
+                if (tuitionNum < parseInt(tuitionMaxStripped)) {
+                    currTr.style.display = 'none';
+                }
+            }
+            else {
+                if (tuitionNum > parseInt(tuitionMaxStripped)) {
+                    currTr.style.display = 'none';
+                }
+            }
+        }
+    }
+}
+
+function putAllBackInTable() {
+    schoolsTable = document.getElementById('schools-table');
+    tr = schoolsTable.getElementsByTagName("tr")
+    for (i = 0; i < tr.length; i++) {
+        currTr = tr[i];
+        currTr.style.display = ''
     }
 }
