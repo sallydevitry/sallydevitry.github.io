@@ -104,7 +104,14 @@ class Bubble {
         .attr('cx', function(d, i) {console.log(d); return i*150+100})
         .attr('cy', 100)
         .attr('r', (d, i) => 50*d['Starting Median Salary']/max)
-        .attr('fill', '#424242')
+        .attr('fill', '#424242');
+
+        var synth = window.speechSynthesis;
+
+    svg2.selectAll('circle').on('mouseover', function(d,i) {
+      let utterThis = new SpeechSynthesisUtterance(d['Starting Median Salary']);
+      synth.speak(utterThis);
+    });
 
     let text = svg2.selectAll('text').data(sortedData).enter()
         .append('text')
@@ -112,6 +119,7 @@ class Bubble {
         // .attr('x', (d,i) => i*150+50)
         // .attr('y', 200)
         .attr('transform', (d,i)=> `translate(${i*150+100},180) rotate(15)`);
+
 
 
   }
