@@ -10,7 +10,7 @@
   <title>Exploring College Options</title>
 
   <!-- Bootstrap core CSS -->
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
 
   <!-- Custom fonts -->
   <link
@@ -118,12 +118,25 @@
         </div>
         <!-- Card Body -->
         <div class="card-body">
-          <div class="flexRowSpace">
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col" style="text-align: center;">Salary Upon Exit</th>
+              </tr>
+            </thead>
+            <tbody id="school-deets-table">
+            </tbody>
+          </table>
+
+          <!-- <div class="flexRowSpace">
             <p> </p>
             <p style="padding-right: 35%; text-decoration: underline; font-size: 18px;">Salary Upon Exit</p>
           </div>
           <div id='school-details'>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
