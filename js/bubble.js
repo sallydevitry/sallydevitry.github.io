@@ -6,6 +6,9 @@ class Bubble {
   //TODO: fix tooltip
 
   draw(raw_dataset) {
+    var selectedMajors = [];
+    var selectedIndices = [];
+    var color = d3.scaleOrdinal(d3.schemeCategory10);
     var formatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
@@ -109,16 +112,47 @@ class Bubble {
         var synth = window.speechSynthesis;
 
     svg2.selectAll('circle').on('mouseover', function(d,i) {
-      let utterThis = new SpeechSynthesisUtterance(d['Starting Median Salary']);
-      synth.speak(utterThis);
+      // let utterThis = new SpeechSynthesisUtterance(d['Starting Median Salary']);
+      // synth.speak(utterThis);
     });
 
-    let text = svg2.selectAll('text').data(sortedData).enter()
-        .append('text')
+    let bc = this;
+    svg2.selectAll('circle').on('click', function(d,i) {
+      let utterThis = new SpeechSynthesisUtterance(d['Starting Median Salary']);
+      synth.speak(utterThis);
+      // check if it's already in the array
+      console.log(selectedIndices);
+        bc.selectedElement = d3.select(this);
+        if (selectedIndices.includes(i)) {
+          var index = selectedIndices.indexOf(i);
+          selectedIndices.splice(index, index+1);
+          selectedMajors.splice(index, index+1);
+          bc.selectedElement.attr('fill', '#424242');
+        // bc.remove(bc.selectedDatum);
+        } else {
+          bc.selectedDatum = d;
+          bc.selectedElement.attr('fill', color(i));
+          selectedIndices.push(i);
+          selectedMajors.push(bc.selectedDatum);
+        // bc.select(bc.selectedDatum);
+        }
+    });
+
+    let text = svg2.selectAll('div').data(sortedData).enter()
+    .append('g')
+        .insert('text')
         .text((d, i) => d['Undergraduate Major'])
         // .attr('x', (d,i) => i*150+50)
         // .attr('y', 200)
         .attr('transform', (d,i)=> `translate(${i*150+100},180) rotate(15)`);
+
+    let text2 = svg2.selectAll('div').data(sortedData).enter()
+        .append('text')
+        .text((d, i) => formatter.format(d['Starting Median Salary']))
+        // .attr('x', (d,i) => i*150+50)
+        // .attr('y', 200)
+        .attr('transform', (d,i)=> `translate(${i*150+105},200) rotate(15)`);
+
 
 
 
