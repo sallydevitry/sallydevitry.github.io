@@ -290,21 +290,6 @@ line{
   stroke: #064789;
   stroke-width: 2;
 }
-.Southern {
-  fill: darkred;
-}
-.NorthEast{
-  fill: darkblue;
-}
-.MidWest{
-  fill:darkgreen;
-}
-.Western{
-  fill:darkkhaki;
-}
-.California{
-  fill:antiquewhite;
-}
 .states{
   fill: lightblue;
 }

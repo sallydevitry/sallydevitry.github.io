@@ -46,6 +46,6 @@ class FilterMap{
   selectRegion(region){
     //console.log('sel ' + region)
     //TODO: give this the filter class so it can call it. Add it to the constroctor
-    //this.filter.toggleRegion(region)
+    filterMapSchools(region);
   }
 }
