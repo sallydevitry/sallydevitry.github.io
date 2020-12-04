@@ -1,8 +1,10 @@
 var fMap;
+var rData;
 function init() {
     var rankData = null
     d3.csv("./data/sallys_data.csv").then(function (rows){
         rankData = rows
+        rData = rankData;
         d3.csv("./data/degrees.csv").then((degreeData) => {
             drawTable(rankData)
             bubbleChart = new Bubble();
