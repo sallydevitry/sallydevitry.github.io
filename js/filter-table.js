@@ -149,19 +149,15 @@ function filterSchools() {
     }
 }
 
-let selectedRegions = {Southern:true, NorthEastern:true, MidWestern:true, Western:true, California:true};
+let selectedRegions = {Southern:true, Northeastern:true, Midwestern:true, Western:true, California:true};
 function filterMapSchools(region){
-
   sel = d3.select('#schools-table').selectAll('tr.'+region)
   if(selectedRegions[region]){
     sel.style('display', 'none')
     selectedRegions[region] = false;
   }
   else{
-    sel.style('display', 'contents')
+    sel.style('display', '')
     selectedRegions[region] = true;
-
   }
-
-
 }
