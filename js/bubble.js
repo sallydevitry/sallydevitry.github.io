@@ -1,8 +1,16 @@
 class Bubble {
   constructor() {
   }
+  //TODO: make monochromatic
+  //TODO: create a lineup of bubbles
+  //TODO: fix tooltip
 
   draw(raw_dataset) {
+    var formatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 0
+    });
     var dataset = new Object();
     dataset['children'] = [];
     raw_dataset.forEach((row) => dataset['children'].push({
@@ -10,7 +18,6 @@ class Bubble {
       'Undergraduate Major': row['Undergraduate Major']
     }));
     var diameter = 600;
-    var color = d3.scaleOrdinal(d3.schemeCategory10);
     var bubble = d3.pack(dataset)
         .size([diameter, diameter])
         .padding(1.5);
@@ -38,14 +45,14 @@ class Bubble {
         });
     node.append("title")
         .text(function(d) {
-            return d['Undergraduate Major'] + ": " + d['Starting Median Salary'];
+            return d['data']['Undergraduate Major'] + ": " + formatter.format(d.data['Starting Median Salary']);
         });
     node.append("circle")
         .attr("r", function(d) {
             return d.r;
         })
         .style("fill", function(d,i) {
-            return color(i);
+            return '#424242';
         });
     node.append("text")
         .attr("dy", ".3em")
@@ -58,11 +65,7 @@ class Bubble {
             return d.r/5;
         })
         .attr("fill", "white");
-    var formatter = new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0
-    });
+
     node.append("text")
         .attr("dy", "1.3em")
         .style("text-anchor", "middle")
@@ -74,5 +77,42 @@ class Bubble {
             return d.r/5;
         })
         .attr("fill", "white");
+
+
+        // the line chart
+        let sortedData = [];
+        raw_dataset.forEach(function(item) {
+          item['Starting Median Salary'] = Number(item['Starting Median Salary'].replace(/[^0-9.-]+/g,""));
+          sortedData.push(item);
+        });
+
+        sortedData.sort(function(a, b) {
+          if (a['Starting Median Salary'] > b['Starting Median Salary']) return -1;
+          else if (a['Starting Median Salary'] < b['Starting Median Salary']) return 1;
+          else return 0;
+      });
+        let max = sortedData[0]['Starting Median Salary'];
+    let lineHeight = 300;
+    var svg2 = d3.select("#sequential")
+        .append("svg")
+        .attr("width", sortedData.length * 150+100)
+        .attr("height", lineHeight)
+        .attr("class", "bubble");
+
+    let circles = svg2.selectAll('circle').data(sortedData).enter()
+        .append('circle')
+        .attr('cx', function(d, i) {console.log(d); return i*150+100})
+        .attr('cy', 100)
+        .attr('r', (d, i) => 50*d['Starting Median Salary']/max)
+        .attr('fill', '#424242')
+
+    let text = svg2.selectAll('text').data(sortedData).enter()
+        .append('text')
+        .text((d, i) => d['Undergraduate Major'])
+        // .attr('x', (d,i) => i*150+50)
+        // .attr('y', 200)
+        .attr('transform', (d,i)=> `translate(${i*150+100},180) rotate(15)`);
+
+
   }
 }

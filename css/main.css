@@ -305,6 +305,9 @@ line{
 .California{
   fill:antiquewhite;
 }
+.states{
+  fill: lightblue;
+}
 .my-select {
   max-width: 200px;
   padding: 8px;
@@ -330,4 +333,8 @@ line{
 
 .school-imgs:hover {
   box-shadow: 10px 10px 5px #ccc;
+}
+
+#sequential {
+  overflow: scroll;
 }

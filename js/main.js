@@ -1,3 +1,4 @@
+var fMap;
 function init() {
     var rankData = null
     d3.csv("./data/sallys_data.csv").then(function (rows){
