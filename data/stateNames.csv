@@ -8,51 +8,51 @@ id,code,name,region
 6,CA,California,California
 7,7,7,7
 8,CO,Colorado,Western
-9,CT,Connecticut,NorthEast
-10,DE,Delaware,NorthEast
-11,DC,District of Columbia,NorthEast
+9,CT,Connecticut,Northeastern
+10,DE,Delaware,Northeastern
+11,DC,District of Columbia,Northeastern
 12,FL,Florida,Southern
 13,GA,Georgia,Southern
 14,14,14,remove
 15,HI,Hawaii,remove
 16,ID,Idaho,Western
-17,IL,Illinois,MidWest
-18,IN,Indiana,MidWest
-19,IA,Iowa,MidWest
-20,KS,Kansas,MidWest
+17,IL,Illinois,Midwestern
+18,IN,Indiana,Midwestern
+19,IA,Iowa,Midwestern
+20,KS,Kansas,Midwestern
 21,KY,Kentucky,Southern
 22,LA,Louisiana,Southern
-23,ME,Maine,NorthEast
-24,MD,Maryland,NorthEast
-25,MA,Massachusetts,NorthEast
-26,MI,Michigan,MidWest
-27,MN,Minnesota,MidWest
+23,ME,Maine,Northeastern
+24,MD,Maryland,Northeastern
+25,MA,Massachusetts,Northeastern
+26,MI,Michigan,Midwestern
+27,MN,Minnesota,Midwestern
 28,MS,Mississippi,Southern
-29,MO,Missouri,MidWest
+29,MO,Missouri,Midwestern
 30,MT,Montana,Western
-31,NE,Nebraska,MidWest
+31,NE,Nebraska,Midwestern
 32,NV,Nevada,Western
-33,NH,New Hampshire,NorthEast
-34,NJ,New Jersey,NorthEast
+33,NH,New Hampshire,Northeastern
+34,NJ,New Jersey,Northeastern
 35,NM,New Mexico,Western
-36,NY,New York,NorthEast
+36,NY,New York,Northeastern
 37,NC,North Carolina,Southern
-38,ND,North Dakota,MidWest
-39,OH,Ohio,MidWest
-40,OK,Oklahoma,MidWest
+38,ND,North Dakota,Midwestern
+39,OH,Ohio,Midwestern
+40,OK,Oklahoma,Midwestern
 41,OR,Oregon,Western
-42,PA,Pennsylvania,NorthEast
+42,PA,Pennsylvania,Northeastern
 43,43,43,remove
-44,RI,Rhode Island,NorthEast
+44,RI,Rhode Island,Northeastern
 45,SC,South Carolina,Southern
-46,SD,South Dakota,MidWest
+46,SD,South Dakota,Midwestern
 47,TN,Tennessee,Southern
 48,TX,Texas,Southern
 49,UT,Utah,Western
-50,VT,Vermont,NorthEast
+50,VT,Vermont,Northeastern
 51,VA,Virginia,Southern
 52,52,52,remove
 53,WA,Washington,Western
 54,WV,West Virginia,Southern
-55,WI,Wisconsin,MidWest
+55,WI,Wisconsin,Midwestern
 56,WY,Wyoming,Western

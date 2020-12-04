@@ -4,7 +4,8 @@ function drawTable(rankData) {
         schoolRank = d.Rank
         schoolTuition = d['Total Annual Cost']
         schoolsTable = d3.select("#schools-table")
-        tableRow = schoolsTable.append('tr').attr('class', stripSpaces(d['School Type'])).attr('class', 't' + schoolTuition)
+        tableRow = schoolsTable.append('tr')
+        tableRow.attr('class', 't'+schoolTuition + " " + d['School Type'] + " " + d.Region)
         tableRow.append('td').append('input').attr('type', 'checkbox').attr('id', `check${stripSpaces(schoolName)}`).on('click', () => showHideSchoolDetails(d))
         tableRow.append('td').append('text').text(schoolName)
         tableRow.append('td').append('text').text(schoolRank)
@@ -29,8 +30,6 @@ function showHideSchoolDetails(data) {
     }
     else {
         currDiv = detailPanel.append('div').attr('class', 'flexRow').attr('id', `div${stripSpaces(data.Name)}`)
-
-
 
         textDeetsDiv = currDiv.append('div').style('margin-left', '10px').style('min-width', '150px')
         textDeetsDiv.append('a').style('font-weight', 'bold').style('font-size', '20px').attr('target', '_blank').attr('href', 'https://' + data.Website).text(data.Name)
@@ -150,8 +149,10 @@ function filterSchools() {
 
 function filterByType() {
     var typeOfSchool = document.getElementById('type-select').value;
+    console.log(typeOfSchool)
     schoolsTable = document.getElementById("schools-table");
     schoolsToShow = document.getElementsByClassName(typeOfSchool)
+    console.log(schoolsToShow)
     tr = schoolsTable.getElementsByTagName("tr")
     for (var i = 0; i < tr.length; i++) {
         tr[i].style.display = 'none';
@@ -200,4 +201,23 @@ function putAllBackInTable() {
         currTr = tr[i];
         currTr.style.display = ''
     }
+}
+
+let selectedRegions = {Southern:true, Northeastern:true, Midwestern:true, Western:true, California:true};
+function filterMapSchools(region){
+  sel = d3.select('#schools-table').selectAll('tr.'+region)
+  if(selectedRegions[region]){
+    sel.style('display', 'none')
+    selectedRegions[region] = false;
+  }
+  else{
+    sel.style('display', '')
+    selectedRegions[region] = true;
+  }
+  if(selectedRegions[region]){
+    d3.selectAll("." + region).style('fill', 'lightskyblue')
+
+  }else{
+    d3.selectAll("." + region).style('fill', 'darksalmon')
+  }
 }

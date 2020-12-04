@@ -22,7 +22,14 @@ p {
 .text-faded {
   color: rgba(255, 255, 255, 0.3);
 }
-
+.lightskyblue{
+  font-weight: bold;
+  color: lightskyblue;
+}
+.lightsalmon{
+  font-weight: bold;
+  color: lightsalmon;
+}
 .site-heading {
   margin-top: 5rem;
   margin-bottom: 5rem;
@@ -241,6 +248,10 @@ p {
   color: rgb(7, 7, 52)
 }
 
+.text-center{
+  text-align: center;
+}
+
 .bg-primary {
   background-color: #064789 !important;
 }
@@ -289,21 +300,6 @@ p {
 line{
   stroke: #064789;
   stroke-width: 2;
-}
-.Southern {
-  fill: darkred;
-}
-.NorthEast{
-  fill: darkblue;
-}
-.MidWest{
-  fill:darkgreen;
-}
-.Western{
-  fill:darkkhaki;
-}
-.California{
-  fill:antiquewhite;
 }
 .states{
   fill: lightblue;
