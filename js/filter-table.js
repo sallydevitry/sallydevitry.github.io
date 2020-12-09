@@ -60,7 +60,6 @@ function showHideSchoolDetails(data) {
         var max = parseFloat(data['Mid-Career 90th Percentile Salary'].replace(/\$|,/g, ''))
         var min = parseFloat(data['Mid-Career 10th Percentile Salary'].replace(/\$|,/g, ''))
 
-
         //box plot
         width = 600
         height = 200
@@ -75,7 +74,7 @@ function showHideSchoolDetails(data) {
 
         //x scale
         var xScale = d3.scaleLinear()
-            .domain([45000, 330000])
+            .domain([35000, 330000])
             .range([0, width - 30])
 
         var x_axis = d3.axisBottom(xScale)
@@ -86,18 +85,23 @@ function showHideSchoolDetails(data) {
         boxG = svg.append('g').attr('transform', 'translate(10, 5)')
 
         //min and max lil lines
+        if (!Number.isNaN(min)) {
         boxG.append('line')
             .attr('x1', xScale(min + 10))
             .attr('x2', xScale(min + 10))
             .attr('y1', lilLineStart)
             .attr('y2', lilLineEnd)
+        }
 
+        if (!Number.isNaN(max)) {
         boxG.append('line')
             .attr('x1', xScale(max + 10))
             .attr('x2', xScale(max + 10))
             .attr('y1', lilLineStart)
             .attr('y2', lilLineEnd)
+        }
 
+        if (!Number.isNaN(max) && !Number.isNaN(min)) {
         //connecting lines
         boxG.append('line')
             .attr('x1', xScale(min + 10))
@@ -110,6 +114,7 @@ function showHideSchoolDetails(data) {
             .attr('x2', xScale(q3 + 10))
             .attr('y1', (lilLineEnd + lilLineStart) / 2)
             .attr('y2', (lilLineEnd + lilLineStart) / 2)
+        }
 
         //median line
         boxG.append('line')

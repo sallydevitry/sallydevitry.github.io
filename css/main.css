@@ -275,7 +275,7 @@ p {
 }
 
 .scrolly {
-  height:300px;
+  height:410px;
   overflow-y: scroll;
 }
 
@@ -305,10 +305,10 @@ line{
   fill: lightblue;
 }
 .my-select {
-  max-width: 200px;
-  padding: 8px;
-  margin-bottom: 10px;
-  margin-top: 8px;
+  max-width: 150px;
+  min-width: 125px;
+  margin-right: 20px;
+  margin-left: 8px;
 }
 
 #searchbox-filter {

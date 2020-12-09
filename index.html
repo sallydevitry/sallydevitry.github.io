@@ -45,16 +45,16 @@
           <h6 class="m-0 font-weight-bold text-secondary-blue">Filter Options</h6>
         </div>
         <!-- Card Body -->
-        <div class="card-body" style="display: flex; flex-direction: row;">
+        <div class="card-body" style="display: flex; flex-direction: column; align-items: center;">
           <div>
             <h6 class="m-0 text-center text-secondary-blue">Filter by Region</h6>
-            <svg width="600" height="300" id="mapSVG"></svg>
+            <svg width="485" height="300" id="mapSVG"></svg>
             <div style="display: flex; flex-direction: row; justify-content: center;">
               <h6 class="m-0 text-center lightskyblue">Shown</h6>
               <h6 class="m-0 text-center lightsalmon">Hidden</h6>
             </div>
           </div>
-          <div id=other-filters>
+          <div style="display: flex; flex-direction: row; margin-top: 40px;">
             <label>Type of School</label>
             <select id='type-select' class="custom-select my-select" onchange="filterByType()">
               <option>Any</option>
@@ -91,7 +91,7 @@
         </div>
         <!-- Card Body -->
         <div class="card-body">
-          <div class="scrolly" style="max-height: 300px;">
+          <div class="scrolly" style="max-height: 400px;">
             <table class="table">
               <thead>
                 <tr>
