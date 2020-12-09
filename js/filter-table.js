@@ -5,7 +5,7 @@ function drawTable(rankData) {
         schoolTuition = d['Total Annual Cost']
         schoolsTable = d3.select("#schools-table")
         tableRow = schoolsTable.append('tr')
-        tableRow.attr('class', 't'+schoolTuition + " " + d['School Type'] + " " + d.Region)
+        tableRow.attr('class', 't'+schoolTuition + " " + stripSpaces(d['School Type']) + " " + d.Region + " hasATd")
         tableRow.append('td').append('input').attr('type', 'checkbox').attr('id', `check${stripSpaces(schoolName)}`).on('click', () => showHideSchoolDetails(d))
         tableRow.append('td').append('text').text(schoolName)
         tableRow.append('td').append('text').text(schoolRank)
@@ -19,7 +19,6 @@ function stripSpaces(schoolName) {
 function showHideSchoolDetails(data) {
 
     var schoolToRemoveExists = document.getElementById(`tr${stripSpaces(data.Name)}`)
-    console.log(schoolToRemoveExists)
 
     if (schoolToRemoveExists) {
         d3.select(`#tr${stripSpaces(data.Name)}`).remove()
@@ -134,11 +133,11 @@ function showHideSchoolDetails(data) {
 }
 
 function filterSchools() {
+    performFilter()
     var input, filter, tr, school, i, txtValue;
     input = document.getElementById('searchbox-filter');
     filter = input.value.toUpperCase();
-    schoolsTable = document.getElementById("schools-table");
-    tr = schoolsTable.getElementsByTagName("tr")
+    tr = document.querySelectorAll('tr.hasATd')
 
     for (i = 0; i < tr.length; i++) {
         school = tr[i]
@@ -151,49 +150,34 @@ function filterSchools() {
     }
 }
 
-function filterByType() {
-    var typeOfSchool = document.getElementById('type-select').value;
-    console.log(typeOfSchool)
-    schoolsTable = document.getElementById("schools-table");
-    schoolsToShow = document.getElementsByClassName(typeOfSchool)
-    console.log(schoolsToShow)
-    tr = schoolsTable.getElementsByTagName("tr")
-    for (var i = 0; i < tr.length; i++) {
-        tr[i].style.display = 'none';
-    }
-    for (var j = 0; j < schoolsToShow.length; j++) {
-        schoolsToShow[j].style.display = '';
-    }
-}
-
-function filterByTuition() {
+function performFilter() {
     putAllBackInTable()
+    var typeOfSchool = stripSpaces(document.getElementById('type-select').value);
     var tuitionMax = document.getElementById('tuition-select').value;
-    console.log(tuitionMax)
-    schoolsTable = document.getElementById('schools-table');
-    trs = schoolsTable.getElementsByTagName("tr")
 
-    for (i = 0; i < trs.length; i++) {
-        currTr = trs[i];
-        if (tuitionMax === 'Any') {
-            currTr.style.display = ''
-        }
+    trSel = document.querySelectorAll('tr.hasATd');
+    if (typeOfSchool != 'Any') {
+        specSel = document.querySelectorAll("tr."+typeOfSchool)
+    }
+    else {
+        specSel = trSel
+    }
+    //hide all rows
+    for (i=0; i<trSel.length; i++) {
+        trSel[i].style.display = 'none';
+    }
+    //reshow the ones that meet the criteria
+    for (i = 0; i < specSel.length; i++) {
+        currTr = specSel[i];
+        tuitionMaxStripped = tuitionMax.replace(/</g, '').replace('$', '').replace('+', '').replace(',', '');
+        tuitionCell = currTr.querySelector('td > .school-tuition')
+        classOfCurr = tuitionCell.innerText.replace('t', '');
+        tuitionNum = parseInt(classOfCurr);
+        if (tuitionNum > parseInt(tuitionMaxStripped)){
+                currTr.style.display = 'none';
+            }
         else {
-            tuitionMaxStripped = tuitionMax.replace(/</g, '').replace('$', '').replace('+', '').replace(',', '');
-            tuitionCell = currTr.querySelector('td > .school-tuition')
-            classOfCurr = tuitionCell.innerText.replace('t', '');
-            tuitionNum = parseInt(classOfCurr);
-
-            if (tuitionMax.includes('+')) {
-                if (tuitionNum < parseInt(tuitionMaxStripped)) {
-                    currTr.style.display = 'none';
-                }
-            }
-            else {
-                if (tuitionNum > parseInt(tuitionMaxStripped)) {
-                    currTr.style.display = 'none';
-                }
-            }
+            currTr.style.display = '';
         }
     }
 }

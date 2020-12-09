@@ -56,22 +56,22 @@
           </div>
           <div style="display: flex; flex-direction: row; margin-top: 40px;">
             <label>Type of School</label>
-            <select id='type-select' class="custom-select my-select" onchange="filterByType()">
+            <select id='type-select' class="custom-select my-select" onchange="performFilter()">
               <option>Any</option>
-              <option>Party</option>
               <option>Engineering</option>
-              <option>Art</option>
-              <option>Other</option>
+              <option>Liberal Arts</option>
+              <option>Ivy League</option>
+              <option>State</option>
+              <option>Party</option>
             </select>
             <label>Yearly Tuition</label>
-            <select id='tuition-select' class="custom-select my-select" onchange="filterByTuition()">
+            <select id='tuition-select' class="custom-select my-select" onchange="performFilter()">
               <option>Any</option>
               <option>&lt $35,000</option>
               <option>&lt $40,000</option>
               <option>&lt $45,000</option>
               <option>&lt $50,000</option>
               <option>&lt $55,000</option>
-              <option>$55,000 +</option>
             </select>
           </div>
         </div>
