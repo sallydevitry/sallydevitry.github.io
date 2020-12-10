@@ -187,7 +187,9 @@ class Bubble {
       .attr('fill', (d) => lightenDarkenColor(color(d['index']), 30))
       .attr('x', (d,i) => 30 -1 + xScale.bandwidth()/2+ xScale.bandwidth()*i)
       .attr("height", function(d) {return 450-yScale(d['data']['data']['Starting Median Salary']); }) // always equal to 0
-      .attr("y", function(d) { return 25 + yScale(d['data']['data']['Starting Median Salary']); });
+      .attr("y", function(d) { return 25 + yScale(d['data']['data']['Starting Median Salary']); })
+      .append('title')
+      .text('Starting Median Salary')
 
     // display the stacked mid career bars
     // let tenthbars = d3.select('#bars').selectAll('rect')
@@ -199,7 +201,9 @@ class Bubble {
       .attr("height", function(d) {
         console.log(d);
         return 450-yScale(Number(d['data']['data']['data']['Mid-Career 10th Percentile Salary'].replace(/[^0-9.-]+/g,""))); }) // always equal to 0
-      .attr("y", function(d) {return 25 + yScale(Number(d['data']['data']['data']['Mid-Career 10th Percentile Salary'].replace(/[^0-9.-]+/g,""))); });
+      .attr("y", function(d) {return 25 + yScale(Number(d['data']['data']['data']['Mid-Career 10th Percentile Salary'].replace(/[^0-9.-]+/g,""))); })
+      .append('title')
+      .text('Mid Career 10th Percentile')
 
     g3.selectAll('rect')
       .data(selectedMajors).enter().append('rect')
@@ -209,7 +213,9 @@ class Bubble {
       .attr("height", function(d) {
         console.log(d);
         return 450-1-yScale(Number(d['data']['data']['data']['Mid-Career 25th Percentile Salary'].replace(/[^0-9.-]+/g,""))-Number(d['data']['data']['data']['Mid-Career 10th Percentile Salary'].replace(/[^0-9.-]+/g,""))); }) // always equal to 0
-      .attr("y", function(d) {return 25 + yScale(Number(d['data']['data']['data']['Mid-Career 25th Percentile Salary'].replace(/[^0-9.-]+/g,""))); });
+      .attr("y", function(d) {return 25 + yScale(Number(d['data']['data']['data']['Mid-Career 25th Percentile Salary'].replace(/[^0-9.-]+/g,""))); })
+      .append('title')
+      .text('Mid Career 25th Percentile')
 
 
     g4.selectAll('rect')
@@ -220,7 +226,9 @@ class Bubble {
       .attr("height", function(d) {
         console.log(d);
         return 450-1-yScale(Number(d['data']['data']['data']['Mid-Career Median Salary'].replace(/[^0-9.-]+/g,""))-Number(d['data']['data']['data']['Mid-Career 25th Percentile Salary'].replace(/[^0-9.-]+/g,""))); }) // always equal to 0
-      .attr("y", function(d) {return 25 + yScale(Number(d['data']['data']['data']['Mid-Career Median Salary'].replace(/[^0-9.-]+/g,""))); });
+      .attr("y", function(d) {return 25 + yScale(Number(d['data']['data']['data']['Mid-Career Median Salary'].replace(/[^0-9.-]+/g,""))); })
+      .append('title')
+      .text('Mid Career Median')
 
 
     g5.selectAll('rect')
@@ -231,7 +239,9 @@ class Bubble {
       .attr("height", function(d) {
         console.log(d);
         return 450-1-yScale(Number(d['data']['data']['data']['Mid-Career 75th Percentile Salary'].replace(/[^0-9.-]+/g,""))-Number(d['data']['data']['data']['Mid-Career Median Salary'].replace(/[^0-9.-]+/g,""))); }) // always equal to 0
-      .attr("y", function(d) {return 25 + yScale(Number(d['data']['data']['data']['Mid-Career 75th Percentile Salary'].replace(/[^0-9.-]+/g,""))); });
+      .attr("y", function(d) {return 25 + yScale(Number(d['data']['data']['data']['Mid-Career 75th Percentile Salary'].replace(/[^0-9.-]+/g,""))); })
+      .append('title')
+      .text('Mid Career 75th Percentile')
 
 
     g6.selectAll('rect')
@@ -242,7 +252,9 @@ class Bubble {
       .attr("height", function(d) {
         console.log(d);
         return 450-1-yScale(Number(d['data']['data']['data']['Mid-Career 90th Percentile Salary'].replace(/[^0-9.-]+/g,""))-Number(d['data']['data']['data']['Mid-Career 75th Percentile Salary'].replace(/[^0-9.-]+/g,""))); }) // always equal to 0
-      .attr("y", function(d) {return 25 + yScale(Number(d['data']['data']['data']['Mid-Career 90th Percentile Salary'].replace(/[^0-9.-]+/g,""))); });
+      .attr("y", function(d) {return 25 + yScale(Number(d['data']['data']['data']['Mid-Career 90th Percentile Salary'].replace(/[^0-9.-]+/g,""))); })
+      .append('title')
+      .text('Mid Career 90th Percentile')
     }
   }
 }
