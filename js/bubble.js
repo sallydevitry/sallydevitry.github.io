@@ -43,6 +43,7 @@ class Bubble {
         })
         .append("g")
         .attr("class", "node")
+        .attr('id', function(d) {return (stripSpaces(d['data']['Undergraduate Major']))})
         .attr("transform", function(d) {
             return "translate(" + d.x + "," + d.y + ")";
         });
@@ -152,9 +153,34 @@ class Bubble {
         // .attr('x', (d,i) => i*150+50)
         // .attr('y', 200)
         .attr('transform', (d,i)=> `translate(${i*150+105},200) rotate(15)`);
-
-
-
-
   }
+
+
+}
+
+function filterJobs() {
+    var input, filter, tr, school, i, txtValue;
+    input = document.getElementById('searchbox-jobs');
+    console.log(input.value)
+    filter = input.value.toUpperCase();
+    bubbles = document.querySelectorAll('g.node')
+    degreesList = []
+    bubblesToShow = []
+    for (i=0; i< bubbles.length; i++) {
+        degreesList.push(bubbles[i].id)
+    }
+    console.log(degreesList)
+    for (i=0; i<bubbles.length; i++) {
+        bubbles[i].style.display = 'none';
+    }
+
+    for (i = 0; i < degreesList.length; i++) {
+        degree = degreesList[i]
+        if (degree.toUpperCase().indexOf(filter) > -1) {
+            bubblesToShow.push(document.getElementById(degree))
+        }
+    }
+    for (j=0; j<bubblesToShow.length; j++){
+        bubblesToShow[j].style.display=''
+    }
 }
