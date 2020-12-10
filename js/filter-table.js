@@ -61,8 +61,7 @@ function showHideSchoolDetails(data) {
         textAndPic.append('br')
 
         imgTd = schoolRow.append('td')
-        imgTd.append('a').attr('target', '_blank').attr('href', 'https://' + data.Website)
-        imgTd.append('img').attr('src', `../img/${stripSpaces(data.Name)}.jpg`).attr('class', 'school-imgs')
+        imgTd.append('a').attr('target', '_blank').attr('href', 'https://' + data.Website).append('img').attr('src', `../img/${stripSpaces(data.Name)}.jpg`).attr('class', 'school-imgs')
 
         chartTr = schoolRow.append('td').attr('class', 'boxPlot')
 
