@@ -154,7 +154,6 @@ function filterSchools() {
     }
     if (filter == ''){
       performFilter();
-      console.log("DIOEKDJLFKJLK")
     }
 }
 
