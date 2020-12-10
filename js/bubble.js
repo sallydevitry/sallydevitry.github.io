@@ -30,57 +30,57 @@ class Bubble {
         .attr("height", diameter)
         .attr("class", "bubble");
 
-    var nodes = d3.hierarchy(dataset)
-        .sum(function(d) {
-          return d['Starting Median Salary'];
-        });
-
-    var node = svg.selectAll(".node")
-        .data(bubble(nodes).descendants())
-        .enter()
-        .filter(function(d){
-            return  !d.children
-        })
-        .append("g")
-        .attr("class", "node")
-        .attr("transform", function(d) {
-            return "translate(" + d.x + "," + d.y + ")";
-        });
-    node.append("title")
-        .text(function(d) {
-            return d['data']['Undergraduate Major'] + ": " + formatter.format(d.data['Starting Median Salary']);
-        });
-    node.append("circle")
-        .attr("r", function(d) {
-            return d.r;
-        })
-        .style("fill", function(d,i) {
-            return '#424242';
-        });
-    node.append("text")
-        .attr("dy", ".3em")
-        .style("text-anchor", "middle")
-        .text(function(d) {
-            return d.data['Undergraduate Major'].substring(0, d.r / 3);
-        })
-        .attr("font-family", "sans-serif")
-        .attr("font-size", function(d){
-            return d.r/5;
-        })
-        .attr("fill", "white");
-
-    node.append("text")
-        .attr("dy", "1.3em")
-        .style("text-anchor", "middle")
-        .text(function(d) {
-            return formatter.format(d.data['Starting Median Salary']);
-        })
-        .attr("font-family",  "Gill Sans", "Gill Sans MT")
-        .attr("font-size", function(d){
-            return d.r/5;
-        })
-        .attr("fill", "white");
-
+    // var nodes = d3.hierarchy(dataset)
+        // .sum(function(d) {
+          // return d['Starting Median Salary'];
+        // });
+//
+    // var node = svg.selectAll(".node")
+        // .data(bubble(nodes).descendants())
+        // .enter()
+        // .filter(function(d){
+            // return  !d.children
+        // })
+        // .append("g")
+        // .attr("class", "node")
+        // .attr("transform", function(d) {
+            // return "translate(" + d.x + "," + d.y + ")";
+        // });
+    // node.append("title")
+        // .text(function(d) {
+            // return d['data']['Undergraduate Major'] + ": " + formatter.format(d.data['Starting Median Salary']);
+        // });
+    // node.append("circle")
+        // .attr("r", function(d) {
+            // return d.r;
+        // })
+        // .style("fill", function(d,i) {
+            // return '#424242';
+        // });
+    // node.append("text")
+        // .attr("dy", ".3em")
+        // .style("text-anchor", "middle")
+        // .text(function(d) {
+            // return d.data['Undergraduate Major'].substring(0, d.r / 3);
+        // })
+        // .attr("font-family", "sans-serif")
+        // .attr("font-size", function(d){
+            // return d.r/5;
+        // })
+        // .attr("fill", "white");
+//
+    // node.append("text")
+        // .attr("dy", "1.3em")
+        // .style("text-anchor", "middle")
+        // .text(function(d) {
+            // return formatter.format(d.data['Starting Median Salary']);
+        // })
+        // .attr("font-family",  "Gill Sans", "Gill Sans MT")
+        // .attr("font-size", function(d){
+            // return d.r/5;
+        // })
+        // .attr("fill", "white");
+//
 
         // the line chart
         let sortedData = [];
@@ -133,7 +133,7 @@ class Bubble {
           bc.selectedDatum = d;
           bc.selectedElement.attr('fill', color(i));
           selectedIndices.push(i);
-          selectedMajors.push(bc.selectedDatum);
+          selectedMajors.push({data:bc.selectedDatum, index: i});
         // bc.select(bc.selectedDatum);
         }
     });
@@ -153,7 +153,121 @@ class Bubble {
         // .attr('y', 200)
         .attr('transform', (d,i)=> `translate(${i*150+105},200) rotate(15)`);
 
+        //*******************************8
+        //*******************************8
+        //*******************************8
+        //*******************************8
+        //*******************************8
+        //*******************************8
+        // LINE chart
+        //*******************************8
+        //*******************************8
+        //*******************************8
+        //*******************************8
+        //*******************************8
+        //*******************************8
+//     d3.selectAll("rect").remove()
+//     d3.selectAll("path").remove()
+//     d3.selectAll("area").remove()
+//     d3.selectAll("circle").remove()
+//     d3.selectAll("text").remove()
+//     d3.selectAll("g.tick").remove()
 
+    // var dropDown = d3.select("#choices")
+    // var options = dropDown.selectAll("option")
+    //     .data(choices)
+    //     .enter()
+    //     .append("option");
+
+    // options.text(function (d) {
+        // return d.type;
+    // })
+        // .attr("value", function (d) {
+            // return d.type;
+        // })
+
+    // if (lineData[0].time === 'Jan') {
+        // var xScale = d3.scaleBand()
+            // .domain(months)
+            // .range([0, 500])
+    // }
+    // else {
+        var xScale = d3.scaleBand()
+            .domain(['starting','mid career'])
+            .range([0, 600])
+    // }
+
+    var yScale = d3.scaleLinear()
+        .domain([0, 200000])
+        .range([500, 0]);
+
+    var theG = svg;
+
+    theG
+        .attr("transform", "translate(70, 20)")
+    //add x axis
+    theG.append("g")
+        .attr("transform", "translate(0," + 500 + ")")
+        .call(d3.axisBottom(xScale));
+
+    //add y axis
+    theG.append("g")
+        .call(d3.axisLeft(yScale).tickFormat(function (d) {
+            return d;
+        }).ticks(10))
+        .append("text")
+        .attr("y", 0)
+        .attr("dy", "0.71em")
+        .attr("text-anchor", "end")
+        .text("value")
+
+    //add axis labels
+    theG.append("text")
+        .attr("text-anchor", "end")
+        .attr("y", -50)
+        .attr("x", -220)
+        .attr("dy", ".75em")
+        .attr("transform", "rotate(-90)")
+        .text("Tweets");
+
+    //add chart title
+    let g2 = d3.select('g#noTranslate')
+    g2.append("text")
+        .attr("class", "lilPadding")
+        .attr("x", (500 / 2))
+        .attr("y", 10)
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .text("Trump Tweets 2010-2019");
+
+    g = svg.append("g")
+        .attr("transform", "translate(0, 500) scale(1, -1)")
+        .append("path")
+        .datum(selectedMajors)
+        .attr("fill", "none")
+        .attr("stroke", "steelblue")
+        .attr("stroke-width", 2)
+        .attr("d", d3.line()
+            .x(function (d) { return xScale(1) })
+            .y(function (d) { return yScale(d.data['Starting Median Salary']) })
+        )
+
+    let path = svg
+        .selectAll("path");
+
+    const pathLength = path.node().getTotalLength();
+
+    path
+        .attr("stroke-dashoffset", pathLength)
+        .attr("stroke-dasharray", pathLength)
+
+    const transitionPath = d3.transition().duration(2500);
+
+    path
+        .attr("stroke-dashoffset", pathLength)
+        .attr("stroke-dasharray", pathLength)
+        .transition(transitionPath)
+        .attr("stroke-dashoffset", 0);
 
 
   }
