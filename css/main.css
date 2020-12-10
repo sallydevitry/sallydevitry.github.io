@@ -311,7 +311,7 @@ line{
   margin-left: 8px;
 }
 
-#searchbox-filter {
+#searchbox-filter, #searchbox-jobs {
   background-image: url('../img/search-icon-smaller.png');
   background-position: 2px 3px;
   background-repeat: no-repeat;
