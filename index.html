@@ -149,7 +149,7 @@
     </div>
 
     <!-- Degrees & Salary info -->
-    <div class="col-xl-10 col-xl-9">
+    <div class="col-xl-12 col-xl-10">
       <div class="card shadow mb-4">
         <!-- Card Header -->
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -162,9 +162,13 @@
           <input style="max-height: 28px; max-width: 200px;" id="searchbox-jobs" class="form-control" type="text"
             onkeyup="filterJobs()" placeholder="Search for Jobs..." aria-label="Search">
         </div>
-        <div id="myAreaChart" class="card-body">
-        </div>
-        <div id="sequential">
+        <div id="bubbleChart" class="card-body">
+            <svg width="600" height="600" id="bubbleSvg" class="bubble"></svg>
+            <svg width="500" height="600" id="barChartSvg">
+                <g id="xAxis"></g>
+                <g id="yAxis"></g>
+                <g id="bars"></g>
+            </svg>
         </div>
       </div>
     </div>
@@ -172,7 +176,7 @@
 
   <footer class="footer text-faded text-center py-5">
     <div class="container">
-      <p class="m-0 small">CS5820 project by Sally D., Kaden H., and Jared L.</p>
+      <p class="m-0 small">CS5820 project by Sally D., Kaden H., and a little bit Jared L.</p>
       <a class="m-0 small" href="https://www.youtube.com/watch?v=H9Awp8SC2CY">Go to project video</a>
     </div>
   </footer>

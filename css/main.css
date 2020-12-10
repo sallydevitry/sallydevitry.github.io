@@ -301,6 +301,13 @@ line{
   stroke: #064789;
   stroke-width: 2;
 }
+
+#bubbleChart {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
 .states{
   fill: lightblue;
 }
