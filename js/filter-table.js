@@ -129,12 +129,21 @@ function showHideSchoolDetails(data) {
             .attr("stroke", "#064789")
             .style('fill', 'none')
 
+        deleteButton = schoolRow.append('td').append('button').attr('class', 'my-btn').on('click', () => removeSchool(data.Name)).append('i').attr('class', 'fa fa-close')
     }
 }
 
-function getTravelURL(city) {
-    return "https://wikitravel.org/en/"+city.replace(" ", "_")
+function removeSchool(name) {
+    var schoolToRemoveExists = document.getElementById(`tr${stripSpaces(name)}`)
+
+    if (schoolToRemoveExists) {
+        d3.select(`#tr${stripSpaces(name)}`).remove()
+        checkboxToUncheck = d3.select(`#check${stripSpaces(name)}`)
+        console.log(checkboxToUncheck)
+        checkboxToUncheck.property('checked', false)
+    }
 }
+
 
 function filterSchools() {
     performFilter()
