@@ -26,6 +26,10 @@ p {
   font-weight: bold;
   color: lightskyblue;
 }
+.lightgray{
+  font-weight: bold;
+  color: lightgray;  
+}
 .lightsalmon{
   font-weight: bold;
   color: lightsalmon;
