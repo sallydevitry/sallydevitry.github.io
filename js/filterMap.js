@@ -37,11 +37,21 @@ class FilterMap{
 
   hoverRegion(region){
     //console.log('in ' + region);
-    d3.selectAll("." + region).style('fill', 'darkblue')
+    if(selectedRegions[region]){
+      d3.selectAll("." + region).style('fill', 'lightskyblue')
+
+    }else{
+      d3.selectAll("." + region).style('fill', 'darksalmon')
+    }
   }
   unhoverRegion(region){
     //console.log('out ' + region)
-    d3.selectAll("." + region).style('fill', 'lightblue')
+    if(selectedRegions[region]){
+      d3.selectAll("." + region).style('fill', 'lightblue')
+
+    }else{
+      d3.selectAll("." + region).style('fill', 'lightsalmon')
+    }
   }
   selectRegion(region){
     //console.log('sel ' + region)

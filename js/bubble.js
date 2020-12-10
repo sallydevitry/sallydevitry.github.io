@@ -82,6 +82,54 @@ class Bubble {
         // .attr("fill", "white");
 //
 
+    var node = svg.selectAll(".node")
+        .data(bubble(nodes).descendants())
+        .enter()
+        .filter(function(d){
+            return  !d.children
+        })
+        .append("g")
+        .attr("class", "node")
+        .attr('id', function(d) {return (stripSpaces(d['data']['Undergraduate Major']))})
+        .attr("transform", function(d) {
+            return "translate(" + d.x + "," + d.y + ")";
+        });
+    node.append("title")
+        .text(function(d) {
+            return d['data']['Undergraduate Major'] + ": " + formatter.format(d.data['Starting Median Salary']);
+        });
+    node.append("circle")
+        .attr("r", function(d) {
+            return d.r;
+        })
+        .style("fill", function(d,i) {
+            return '#424242';
+        });
+    node.append("text")
+        .attr("dy", ".3em")
+        .style("text-anchor", "middle")
+        .text(function(d) {
+            return d.data['Undergraduate Major'].substring(0, d.r / 3);
+        })
+        .attr("font-family", "sans-serif")
+        .attr("font-size", function(d){
+            return d.r/5;
+        })
+        .attr("fill", "white");
+
+    node.append("text")
+        .attr("dy", "1.3em")
+        .style("text-anchor", "middle")
+        .text(function(d) {
+            return formatter.format(d.data['Starting Median Salary']);
+        })
+        .attr("font-family",  "Gill Sans", "Gill Sans MT")
+        .attr("font-size", function(d){
+            return d.r/5;
+        })
+        .attr("fill", "white");
+
+
         // the line chart
         let sortedData = [];
         raw_dataset.forEach(function(item) {
@@ -152,6 +200,7 @@ class Bubble {
         // .attr('x', (d,i) => i*150+50)
         // .attr('y', 200)
         .attr('transform', (d,i)=> `translate(${i*150+105},200) rotate(15)`);
+  }
 
         //*******************************8
         //*******************************8
@@ -173,12 +222,28 @@ class Bubble {
 //     d3.selectAll("text").remove()
 //     d3.selectAll("g.tick").remove()
 
+}
     // var dropDown = d3.select("#choices")
     // var options = dropDown.selectAll("option")
     //     .data(choices)
     //     .enter()
     //     .append("option");
 
+function filterJobs() {
+    var input, filter, tr, school, i, txtValue;
+    input = document.getElementById('searchbox-jobs');
+    console.log(input.value)
+    filter = input.value.toUpperCase();
+    bubbles = document.querySelectorAll('g.node')
+    degreesList = []
+    bubblesToShow = []
+    for (i=0; i< bubbles.length; i++) {
+        degreesList.push(bubbles[i].id)
+    }
+    console.log(degreesList)
+    for (i=0; i<bubbles.length; i++) {
+        bubbles[i].style.display = 'none';
+    }
     // options.text(function (d) {
         // return d.type;
     // })
@@ -186,6 +251,15 @@ class Bubble {
             // return d.type;
         // })
 
+    for (i = 0; i < degreesList.length; i++) {
+        degree = degreesList[i]
+        if (degree.toUpperCase().indexOf(filter) > -1) {
+            bubblesToShow.push(document.getElementById(degree))
+        }
+    }
+    for (j=0; j<bubblesToShow.length; j++){
+        bubblesToShow[j].style.display=''
+    }
     // if (lineData[0].time === 'Jan') {
         // var xScale = d3.scaleBand()
             // .domain(months)

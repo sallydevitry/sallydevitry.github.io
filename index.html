@@ -7,10 +7,10 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Exploring College Options</title>
+  <title>Exploring Future Pathways</title>
 
   <!-- Bootstrap core CSS -->
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
 
   <!-- Custom fonts -->
   <link
@@ -24,9 +24,16 @@
 <body>
   <div style="background-color: rgba(32, 72, 126, 0.90)">
     <h1 class="site-heading text-center text-white d-none d-lg-block">
-      <span class="site-heading-upper text-primary mb-2">What Should I do with</span>
-      <span class="site-heading-lower">My Life?</span>
+      <span class="site-heading-upper text-primary mb-2">Future</span>
+      <span class="site-heading-lower">Pathways</span>
     </h1>
+  </div>
+
+  <div class="w-100 site-subheading" style="background-color: rgba(32, 72, 126, 0.90)">
+    <h3 class=" text-center text-white">
+      <!-- <span class="site-heading-upper text-primary mb-2">What Should I do with</span> -->
+      <span class="site-heading-lower">College Exploration</span>
+    </h3>
   </div>
   <!-- Content Row -->
   <div class="row mx-auto">
@@ -38,27 +45,33 @@
           <h6 class="m-0 font-weight-bold text-secondary-blue">Filter Options</h6>
         </div>
         <!-- Card Body -->
-        <div class="card-body" style="display: flex; flex-direction: row;">
-          <svg width="600" height="400" id="mapSVG">
-
-          </svg>
-          <div id=other-filters>
+        <div class="card-body" style="display: flex; flex-direction: column; align-items: center;">
+          <div>
+            <h6 class="m-0 text-center text-secondary-blue">Filter by Region</h6>
+            <svg width="485" height="300" id="mapSVG"></svg>
+            <div style="display: flex; flex-direction: row; justify-content: center;">
+              <h6 class="m-0 text-center lightskyblue">Shown</h6>
+              <h6 class="m-0 text-center lightsalmon">Hidden</h6>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: row; margin-top: 40px;">
             <label>Type of School</label>
-            <select class="custom-select my-select">
+            <select id='type-select' class="custom-select my-select" onchange="performFilter()">
               <option>Any</option>
-              <option>Party</option>
               <option>Engineering</option>
-              <option>Art</option>
-              <option>Other</option>
+              <option>Liberal Arts</option>
+              <option>Ivy League</option>
+              <option>State</option>
+              <option>Party</option>
             </select>
             <label>Yearly Tuition</label>
-            <select class="custom-select my-select">
+            <select id='tuition-select' class="custom-select my-select" onchange="performFilter()">
               <option>Any</option>
-              <option>&lt $10,000</option>
-              <option>&lt $20,000</option>
-              <option>&lt $30,000</option>
+              <option>&lt $35,000</option>
               <option>&lt $40,000</option>
-              <option>$40,000 +</option>
+              <option>&lt $45,000</option>
+              <option>&lt $50,000</option>
+              <option>&lt $55,000</option>
             </select>
           </div>
         </div>
@@ -78,7 +91,7 @@
         </div>
         <!-- Card Body -->
         <div class="card-body">
-          <div class="scrolly" style="max-height: 300px;">
+          <div class="scrolly" style="max-height: 400px;">
             <table class="table">
               <thead>
                 <tr>
@@ -97,7 +110,7 @@
     </div>
 
     <!-- Detailed view of selected schools -->
-    <div class="col-xl-10 col-xl-9">
+    <div class="col-xl-12 col-xl-10">
       <div class="card shadow mb-4">
         <!-- Card Header -->
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -105,12 +118,25 @@
         </div>
         <!-- Card Body -->
         <div class="card-body">
-          <div class="flexRowSpace">
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col" style="text-align: center;">Salary Upon Exit</th>
+              </tr>
+            </thead>
+            <tbody id="school-deets-table">
+            </tbody>
+          </table>
+
+          <!-- <div class="flexRowSpace">
             <p> </p>
             <p style="padding-right: 35%; text-decoration: underline; font-size: 18px;">Salary Upon Exit</p>
           </div>
           <div id='school-details'>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -132,6 +158,10 @@
           </div>
         </div>
         <!-- Card Body -->
+        <div style="padding: 20px;">
+          <input style="max-height: 28px; max-width: 200px;" id="searchbox-jobs" class="form-control" type="text"
+            onkeyup="filterJobs()" placeholder="Search for Jobs..." aria-label="Search">
+        </div>
         <div id="myAreaChart" class="card-body">
         </div>
         <div id="sequential">

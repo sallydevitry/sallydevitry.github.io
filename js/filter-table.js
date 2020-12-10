@@ -5,11 +5,11 @@ function drawTable(rankData) {
         schoolTuition = d['Total Annual Cost']
         schoolsTable = d3.select("#schools-table")
         tableRow = schoolsTable.append('tr')
-        tableRow.attr('class', d.Region)
+        tableRow.attr('class', 't'+schoolTuition + " " + stripSpaces(d['School Type']) + " " + d.Region + " hasATd")
         tableRow.append('td').append('input').attr('type', 'checkbox').attr('id', `check${stripSpaces(schoolName)}`).on('click', () => showHideSchoolDetails(d))
         tableRow.append('td').append('text').text(schoolName)
         tableRow.append('td').append('text').text(schoolRank)
-        tableRow.append('td').append('text').text(schoolTuition)
+        tableRow.append('td').append('text').attr('class', 'school-tuition').text(schoolTuition)
     })
 }
 function stripSpaces(schoolName) {
@@ -18,51 +18,46 @@ function stripSpaces(schoolName) {
 
 function showHideSchoolDetails(data) {
 
-    detailPanel = d3.select('#school-details')
-
-    idSchoolToRemove = `#div${stripSpaces(data.Name)}`
-    console.log(idSchoolToRemove)
-    var schoolToRemoveExists = document.getElementById(`div${stripSpaces(data.Name)}`)
-    console.log(schoolToRemoveExists)
+    var schoolToRemoveExists = document.getElementById(`tr${stripSpaces(data.Name)}`)
 
     if (schoolToRemoveExists) {
-        d3.select(`#div${stripSpaces(data.Name)}`).remove()
+        d3.select(`#tr${stripSpaces(data.Name)}`).remove()
     }
     else {
-        currDiv = detailPanel.append('div').attr('class', 'flexRow').attr('id', `div${stripSpaces(data.Name)}`)
 
+        schoolDeetsTable = d3.select('#school-deets-table')
+        schoolRow = schoolDeetsTable.append('tr').attr('id',`tr${stripSpaces(data.Name)}`)
+        textAndPic = schoolRow.append('td')
 
+        textAndPic.append('a').style('font-weight', 'bold').style('font-size', '20px').attr('target', '_blank').attr('href', 'https://' + data.Website).text(data.Name)
+        textAndPic.append('br')
+        textAndPic.append('text').text('Location: ').style('font-size', '14px')
+        textAndPic.append('a').attr('target', '_blank').attr('href', data['aboutLocation']).text(data['City'] + ", " + data['State']).style('font-size', '14px')
+        textAndPic.append('br')
+        textAndPic.append('text').text("Student Population: ").style('font-size', '14px')
+        textAndPic.append('text').text(data['Student Population']).style('font-size', '14px')
+        textAndPic.append('br')
+        textAndPic.append('text').text("Average ACT score: ").style('font-size', '14px')
+        textAndPic.append('text').text(data['ACT Lower'] + "-" + data['ACT Upper']).style('font-size', '14px')
+        textAndPic.append('br')
+        textAndPic.append('text').text("Acceptance rate: ").style('font-size', '14px')
+        textAndPic.append('text').text(data['Acceptance Rate'] + '%').style('font-size', '14px')
+        textAndPic.append('br')
+        textAndPic.append('text').text("Avg. grant aid: ").style('font-size', '14px')
+        textAndPic.append('text').text('$' + data['Average Grant Aid']).style('font-size', '14px')
+        textAndPic.append('br')
 
-        textDeetsDiv = currDiv.append('div').style('margin-left', '10px')
-        textDeetsDiv.append('text').style('font-weight', 'bold').style('font-size', '20px').text(data.Name)
-        textDeetsDiv.append('br')
-        textDeetsDiv.append('text').text('Location: ')
-        textDeetsDiv.append('text').text(data['City'] + ", " + data['State'])
-        textDeetsDiv.append('br')
-        textDeetsDiv.append('text').text("Student Population: ")
-        textDeetsDiv.append('text').text(data['Student Population'])
-        textDeetsDiv.append('br')
-        textDeetsDiv.append('text').text("Average ACT score: ")
-        textDeetsDiv.append('text').text(data['ACT Lower'] + "-" + data['ACT Upper'])
-        textDeetsDiv.append('br')
-        textDeetsDiv.append('text').text("Acceptance rate: ")
-        textDeetsDiv.append('text').text(data['Acceptance Rate'] + '%')
-        textDeetsDiv.append('br')
-        textDeetsDiv.append('text').text("Net Cost: ")
-        textDeetsDiv.append('text').text('$' + data['Net Price'])
-        textDeetsDiv.append('br')
+        imgTd = schoolRow.append('td')
+        imgTd.append('a').attr('target', '_blank').attr('href', 'https://' + data.Website)
+        imgTd.append('img').attr('src', `../img/${stripSpaces(data.Name)}.jpg`).attr('class', 'school-imgs')
 
-        imgDiv = currDiv.append('div')
-        imgDiv.append('img').attr('src', `../img/${stripSpaces(data.Name)}.jpg`).attr('class', 'school-imgs')
-
-        chartDiv = currDiv.append('div').attr('class', 'boxPlot')
+        chartTr = schoolRow.append('td').attr('class', 'boxPlot')
 
         var q1 = parseFloat(data['Mid-Career 25th Percentile Salary'].replace(/\$|,/g, ''))
         var median = parseFloat(data['Mid-Career Median Salary'].replace(/\$|,/g, ''))
         var q3 = parseFloat(data['Mid-Career 75th Percentile Salary'].replace(/\$|,/g, ''))
         var max = parseFloat(data['Mid-Career 90th Percentile Salary'].replace(/\$|,/g, ''))
         var min = parseFloat(data['Mid-Career 10th Percentile Salary'].replace(/\$|,/g, ''))
-
 
         //box plot
         width = 600
@@ -72,13 +67,13 @@ function showHideSchoolDetails(data) {
         lilLineEnd = 84
 
         // Create the axis
-        var svg = chartDiv.append('svg')
+        var svg = chartTr.append('svg')
             .attr('width', width)
             .attr('height', height);
 
         //x scale
         var xScale = d3.scaleLinear()
-            .domain([45000, 330000])
+            .domain([35000, 330000])
             .range([0, width - 30])
 
         var x_axis = d3.axisBottom(xScale)
@@ -89,18 +84,23 @@ function showHideSchoolDetails(data) {
         boxG = svg.append('g').attr('transform', 'translate(10, 5)')
 
         //min and max lil lines
+        if (!Number.isNaN(min)) {
         boxG.append('line')
             .attr('x1', xScale(min + 10))
             .attr('x2', xScale(min + 10))
             .attr('y1', lilLineStart)
             .attr('y2', lilLineEnd)
+        }
 
+        if (!Number.isNaN(max)) {
         boxG.append('line')
             .attr('x1', xScale(max + 10))
             .attr('x2', xScale(max + 10))
             .attr('y1', lilLineStart)
             .attr('y2', lilLineEnd)
+        }
 
+        if (!Number.isNaN(max) && !Number.isNaN(min)) {
         //connecting lines
         boxG.append('line')
             .attr('x1', xScale(min + 10))
@@ -113,6 +113,7 @@ function showHideSchoolDetails(data) {
             .attr('x2', xScale(q3 + 10))
             .attr('y1', (lilLineEnd + lilLineStart) / 2)
             .attr('y2', (lilLineEnd + lilLineStart) / 2)
+        }
 
         //median line
         boxG.append('line')
@@ -131,12 +132,16 @@ function showHideSchoolDetails(data) {
     }
 }
 
+function getTravelURL(city) {
+    return "https://wikitravel.org/en/"+city.replace(" ", "_")
+}
+
 function filterSchools() {
+    performFilter()
     var input, filter, tr, school, i, txtValue;
     input = document.getElementById('searchbox-filter');
     filter = input.value.toUpperCase();
-    schoolsTable = document.getElementById("schools-table");
-    tr = schoolsTable.getElementsByTagName("tr")
+    tr = document.querySelectorAll('tr.hasATd')
 
     for (i = 0; i < tr.length; i++) {
         school = tr[i]
@@ -149,19 +154,62 @@ function filterSchools() {
     }
 }
 
-let selectedRegions = {Southern:true, NorthEastern:true, MidWestern:true, Western:true, California:true};
-function filterMapSchools(region){
+function performFilter() {
+    putAllBackInTable()
+    var typeOfSchool = stripSpaces(document.getElementById('type-select').value);
+    var tuitionMax = document.getElementById('tuition-select').value;
 
+    trSel = document.querySelectorAll('tr.hasATd');
+    if (typeOfSchool != 'Any') {
+        specSel = document.querySelectorAll("tr."+typeOfSchool)
+    }
+    else {
+        specSel = trSel
+    }
+    //hide all rows
+    for (i=0; i<trSel.length; i++) {
+        trSel[i].style.display = 'none';
+    }
+    //reshow the ones that meet the criteria
+    for (i = 0; i < specSel.length; i++) {
+        currTr = specSel[i];
+        tuitionMaxStripped = tuitionMax.replace(/</g, '').replace('$', '').replace('+', '').replace(',', '');
+        tuitionCell = currTr.querySelector('td > .school-tuition')
+        classOfCurr = tuitionCell.innerText.replace('t', '');
+        tuitionNum = parseInt(classOfCurr);
+        if (tuitionNum > parseInt(tuitionMaxStripped)){
+                currTr.style.display = 'none';
+            }
+        else {
+            currTr.style.display = '';
+        }
+    }
+}
+
+function putAllBackInTable() {
+    schoolsTable = document.getElementById('schools-table');
+    tr = schoolsTable.getElementsByTagName("tr")
+    for (i = 0; i < tr.length; i++) {
+        currTr = tr[i];
+        currTr.style.display = ''
+    }
+}
+
+let selectedRegions = {Southern:true, Northeastern:true, Midwestern:true, Western:true, California:true};
+function filterMapSchools(region){
   sel = d3.select('#schools-table').selectAll('tr.'+region)
   if(selectedRegions[region]){
     sel.style('display', 'none')
     selectedRegions[region] = false;
   }
   else{
-    sel.style('display', 'contents')
+    sel.style('display', '')
     selectedRegions[region] = true;
-
   }
+  if(selectedRegions[region]){
+    d3.selectAll("." + region).style('fill', 'lightskyblue')
 
-
+  }else{
+    d3.selectAll("." + region).style('fill', 'darksalmon')
+  }
 }

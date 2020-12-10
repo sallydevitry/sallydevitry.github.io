@@ -22,7 +22,14 @@ p {
 .text-faded {
   color: rgba(255, 255, 255, 0.3);
 }
-
+.lightskyblue{
+  font-weight: bold;
+  color: lightskyblue;
+}
+.lightsalmon{
+  font-weight: bold;
+  color: lightsalmon;
+}
 .site-heading {
   margin-top: 5rem;
   margin-bottom: 5rem;
@@ -241,6 +248,10 @@ p {
   color: rgb(7, 7, 52)
 }
 
+.text-center{
+  text-align: center;
+}
+
 .bg-primary {
   background-color: #064789 !important;
 }
@@ -264,7 +275,7 @@ p {
 }
 
 .scrolly {
-  height:300px;
+  height:410px;
   overflow-y: scroll;
 }
 
@@ -294,13 +305,13 @@ line{
   fill: lightblue;
 }
 .my-select {
-  max-width: 200px;
-  padding: 8px;
-  margin-bottom: 10px;
-  margin-top: 8px;
+  max-width: 150px;
+  min-width: 125px;
+  margin-right: 20px;
+  margin-left: 8px;
 }
 
-#searchbox-filter {
+#searchbox-filter, #searchbox-jobs {
   background-image: url('../img/search-icon-smaller.png');
   background-position: 2px 3px;
   background-repeat: no-repeat;
@@ -309,7 +320,7 @@ line{
 
 .school-imgs {
   max-height: 160px;
-  max-width: 260px;
+  max-width: 200px;
   border: 2px solid gray;
   margin-top: 10px;
   margin-bottom: 20px;
