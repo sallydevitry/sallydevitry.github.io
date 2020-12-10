@@ -1,3 +1,32 @@
+function lightenDarkenColor(col, amt) {
+
+    var usePound = false;
+
+    if (col[0] == "#") {
+        col = col.slice(1);
+        usePound = true;
+    }
+
+    var num = parseInt(col,16);
+
+    var r = (num >> 16) + amt;
+
+    if (r > 255) r = 255;
+    else if  (r < 0) r = 0;
+
+    var b = ((num >> 8) & 0x00FF) + amt;
+
+    if (b > 255) b = 255;
+    else if  (b < 0) b = 0;
+
+    var g = (num & 0x0000FF) + amt;
+
+    if (g > 255) g = 255;
+    else if (g < 0) g = 0;
+
+    return (usePound?"#":"") + (g | (b << 8) | (r << 16)).toString(16);
+}
+
 class Bubble {
   constructor() {
   }
@@ -124,7 +153,7 @@ class Bubble {
       .range([0, 400])
 
     let yScale = d3.scaleLinear()
-      .domain([0, 300000])
+      .domain([0, 200000])
       .range([450, 0 ]);
 
     let xAxis = d3.axisBottom(xScale);
@@ -144,15 +173,76 @@ class Bubble {
       .selectAll("text");
 
     // display the starting median bars
-    let bars = d3.select('#bars').selectAll('rect')
+    let bars = d3.select('#bars');
+    let g1 = bars.append('g');
+    let g2 = bars.append('g');
+    let g3 = bars.append('g');
+    let g4 = bars.append('g');
+    let g5 = bars.append('g');
+    let g6 = bars.append('g');
+
+    g1.selectAll('rect')
       .data(selectedMajors).enter().append('rect')
       .attr('width', 20)
-      .attr('fill', (d) => color(d['index']))
-      .attr('x', (d,i) => 55 + xScale.bandwidth()/2+ xScale.bandwidth()*i)
-      .attr("height", function(d) { console.log(d);return 450-yScale(d['data']['data']['Starting Median Salary']); }) // always equal to 0
+      .attr('fill', (d) => lightenDarkenColor(color(d['index']), 30))
+      .attr('x', (d,i) => 30 -1 + xScale.bandwidth()/2+ xScale.bandwidth()*i)
+      .attr("height", function(d) {return 450-yScale(d['data']['data']['Starting Median Salary']); }) // always equal to 0
       .attr("y", function(d) { return 25 + yScale(d['data']['data']['Starting Median Salary']); });
 
+    // display the stacked mid career bars
+    // let tenthbars = d3.select('#bars').selectAll('rect')
+    g2.selectAll('rect')
+      .data(selectedMajors).enter().append('rect')
+      .attr('width', 20)
+      .attr('fill', (d) => lightenDarkenColor(color(d['index']), 20))
+      .attr('x', (d,i) => 50 + xScale.bandwidth()/2+ xScale.bandwidth()*i)
+      .attr("height", function(d) {
+        console.log(d);
+        return 450-yScale(Number(d['data']['data']['data']['Mid-Career 10th Percentile Salary'].replace(/[^0-9.-]+/g,""))); }) // always equal to 0
+      .attr("y", function(d) {return 25 + yScale(Number(d['data']['data']['data']['Mid-Career 10th Percentile Salary'].replace(/[^0-9.-]+/g,""))); });
 
+    g3.selectAll('rect')
+      .data(selectedMajors).enter().append('rect')
+      .attr('width', 20)
+      .attr('fill', (d) => lightenDarkenColor(color(d['index']), 10))
+      .attr('x', (d,i) => 50 + xScale.bandwidth()/2+ xScale.bandwidth()*i)
+      .attr("height", function(d) {
+        console.log(d);
+        return 450-1-yScale(Number(d['data']['data']['data']['Mid-Career 25th Percentile Salary'].replace(/[^0-9.-]+/g,""))-Number(d['data']['data']['data']['Mid-Career 10th Percentile Salary'].replace(/[^0-9.-]+/g,""))); }) // always equal to 0
+      .attr("y", function(d) {return 25 + yScale(Number(d['data']['data']['data']['Mid-Career 25th Percentile Salary'].replace(/[^0-9.-]+/g,""))); });
+
+
+    g4.selectAll('rect')
+      .data(selectedMajors).enter().append('rect')
+      .attr('width', 20)
+      .attr('fill', (d) => lightenDarkenColor(color(d['index']), 0))
+      .attr('x', (d,i) => 50 + xScale.bandwidth()/2+ xScale.bandwidth()*i)
+      .attr("height", function(d) {
+        console.log(d);
+        return 450-1-yScale(Number(d['data']['data']['data']['Mid-Career Median Salary'].replace(/[^0-9.-]+/g,""))-Number(d['data']['data']['data']['Mid-Career 25th Percentile Salary'].replace(/[^0-9.-]+/g,""))); }) // always equal to 0
+      .attr("y", function(d) {return 25 + yScale(Number(d['data']['data']['data']['Mid-Career Median Salary'].replace(/[^0-9.-]+/g,""))); });
+
+
+    g5.selectAll('rect')
+      .data(selectedMajors).enter().append('rect')
+      .attr('width', 20)
+      .attr('fill', (d) => lightenDarkenColor(color(d['index']), -10))
+      .attr('x', (d,i) => 50 + xScale.bandwidth()/2+ xScale.bandwidth()*i)
+      .attr("height", function(d) {
+        console.log(d);
+        return 450-1-yScale(Number(d['data']['data']['data']['Mid-Career 75th Percentile Salary'].replace(/[^0-9.-]+/g,""))-Number(d['data']['data']['data']['Mid-Career Median Salary'].replace(/[^0-9.-]+/g,""))); }) // always equal to 0
+      .attr("y", function(d) {return 25 + yScale(Number(d['data']['data']['data']['Mid-Career 75th Percentile Salary'].replace(/[^0-9.-]+/g,""))); });
+
+
+    g6.selectAll('rect')
+      .data(selectedMajors).enter().append('rect')
+      .attr('width', 20)
+      .attr('fill', (d) => lightenDarkenColor(color(d['index']), -20))
+      .attr('x', (d,i) => 50 + xScale.bandwidth()/2+ xScale.bandwidth()*i)
+      .attr("height", function(d) {
+        console.log(d);
+        return 450-1-yScale(Number(d['data']['data']['data']['Mid-Career 90th Percentile Salary'].replace(/[^0-9.-]+/g,""))-Number(d['data']['data']['data']['Mid-Career 75th Percentile Salary'].replace(/[^0-9.-]+/g,""))); }) // always equal to 0
+      .attr("y", function(d) {return 25 + yScale(Number(d['data']['data']['data']['Mid-Career 90th Percentile Salary'].replace(/[^0-9.-]+/g,""))); });
     }
   }
 }
