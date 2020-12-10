@@ -1,7 +1,7 @@
 function drawTable(rankData) {
     rankData.forEach(function (d) {
         schoolName = d.Name
-        schoolRank = d.Rank
+        schoolRank = parseInt(d.Rank)
         schoolTuition = d['Total Annual Cost']
         schoolsTable = d3.select("#schools-table")
         tableRow = schoolsTable.append('tr')
