@@ -229,7 +229,6 @@ class Bubble {
       .attr("y", function(d) {return 25 + yScale(Number(d['data']['data']['data']['Mid-Career Median Salary'].replace(/[^0-9.-]+/g,""))); })
       .append('title')
       .text((d) => `Mid Career Median\n${formatter.format(d['data']['data']['data']['Mid-Career Median Salary'].replace(/[^0-9.-]+/g,""))}`)
-      .text('Mid Career Median')
 
 
     g5.selectAll('rect')
