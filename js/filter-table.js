@@ -1,8 +1,15 @@
 function drawTable(rankData) {
+    
+    var formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 0
+      });
+
     rankData.forEach(function (d) {
         schoolName = d.Name
         schoolRank = d.Rank
-        schoolTuition = d['Total Annual Cost']
+        schoolTuition = formatter.format(d['Total Annual Cost'])
         schoolsTable = d3.select("#schools-table")
         tableRow = schoolsTable.append('tr')
         tableRow.attr('class', 't'+schoolTuition + " " + stripSpaces(d['School Type']) + " " + d.Region + " hasATd")
@@ -17,6 +24,12 @@ function stripSpaces(schoolName) {
 }
 
 function showHideSchoolDetails(data) {
+
+    var formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 0
+      });
 
     var schoolToRemoveExists = document.getElementById(`tr${stripSpaces(data.Name)}`)
 
@@ -44,7 +57,7 @@ function showHideSchoolDetails(data) {
         textAndPic.append('text').text(data['Acceptance Rate'] + '%').style('font-size', '14px')
         textAndPic.append('br')
         textAndPic.append('text').text("Avg. grant aid: ").style('font-size', '14px')
-        textAndPic.append('text').text('$' + data['Average Grant Aid']).style('font-size', '14px')
+        textAndPic.append('text').text(formatter.format(data['Average Grant Aid'])).style('font-size', '14px')
         textAndPic.append('br')
 
         imgTd = schoolRow.append('td')
