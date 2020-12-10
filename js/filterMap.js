@@ -41,7 +41,7 @@ class FilterMap{
       d3.selectAll("." + region).style('fill', 'lightskyblue')
 
     }else{
-      d3.selectAll("." + region).style('fill', 'darksalmon')
+      d3.selectAll("." + region).style('fill', 'gray')
     }
   }
   unhoverRegion(region){
@@ -50,7 +50,7 @@ class FilterMap{
       d3.selectAll("." + region).style('fill', 'lightblue')
 
     }else{
-      d3.selectAll("." + region).style('fill', 'lightsalmon')
+      d3.selectAll("." + region).style('fill', 'lightgray')
     }
   }
   selectRegion(region){
