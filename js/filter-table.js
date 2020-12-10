@@ -1,5 +1,5 @@
 function drawTable(rankData) {
-    
+
     var formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
@@ -200,7 +200,7 @@ function performFilter() {
         currTr = specSel[i];
         tuitionMaxStripped = tuitionMax.replace(/</g, '').replace('$', '').replace('+', '').replace(',', '');
         tuitionCell = currTr.querySelector('td > .school-tuition')
-        classOfCurr = tuitionCell.innerText.replace('t', '');
+        classOfCurr = tuitionCell.innerText.replace('t', '').replace('$', '').replace('+', '').replace(',', '');
         tuitionNum = parseInt(classOfCurr);
         if (tuitionNum > parseInt(tuitionMaxStripped)){
                 currTr.style.display = 'none';
