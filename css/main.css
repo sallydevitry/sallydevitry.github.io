@@ -338,3 +338,17 @@ line{
 #sequential {
   overflow: scroll;
 }
+
+  .my-btn {
+    background-color: rgb(169, 41, 41); /* Blue background */
+    border: none; /* Remove borders */
+    border-radius: 10%;
+    color: white; /* White text */
+    font-size: 16px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+  }
+  
+  /* Darker background on mouse-over */
+  .my-btn:hover {
+    background-color: darkred;
+  }
