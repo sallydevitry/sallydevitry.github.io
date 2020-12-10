@@ -54,9 +54,6 @@ class Bubble {
         .attr("r", function(d) {
             return d.r;
         })
-        .style("fill", function(d,i) {
-            return '#424242';
-        });
     node.append("text")
         .attr("dy", ".3em")
         .style("text-anchor", "middle")
@@ -102,27 +99,19 @@ class Bubble {
 
     let bc = this;
 
-    node.append("circle")
-        .attr("r", function(d) {
-            return d.r;
-        })
-        .attr("fill", function(d,i) {
-            return '#424242';
-        });
-
-    svg.selectAll('circle')
+    svg.selectAll('g')
         .on('click', function(d,i) {
           // check if it's already in the array
-            bc.selectedElement = d3.select(this);
+            bc.selectedElement = d3.select(this).selectAll('circle');
+            console.log(bc.selectedElement);
             if (selectedIndices.includes(i)) {
               console.log('removing');
               var index = selectedIndices.indexOf(i);
               selectedIndices.splice(index, index+1);
               selectedMajors.splice(index, index+1);
-              bc.selectedElement.attr('fill', '#424242');
+              bc.selectedElement.attr('fill', '#000000');
             } else {
               console.log('adding');
-              console.log(d);
               bc.selectedDatum = d;
               bc.selectedElement.attr('fill', color(i));
               selectedIndices.push(i);
