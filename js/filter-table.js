@@ -146,7 +146,7 @@ function filterSchools() {
     for (i = 0; i < tr.length; i++) {
         school = tr[i]
         txtValue = school.textContent || school.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        if (txtValue.toUpperCase().indexOf(filter) > -1 && school.style['display'] == '') {
             tr[i].style.display = ''
         } else {
             tr[i].style.display = 'none';
