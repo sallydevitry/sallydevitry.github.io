@@ -20,14 +20,14 @@ class Bubble {
       'Starting Median Salary':Number(row['Starting Median Salary'].replace(/[^0-9.-]+/g,"")),
       'Undergraduate Major': row['Undergraduate Major']
     }));
-    var diameter = 600;
+    var diameter = 700;
     var bubble = d3.pack(dataset)
         .size([diameter, diameter])
         .padding(1.5);
     var svg = d3.select("#myAreaChart")
         .append("svg")
         .attr("width", diameter)
-        .attr("height", diameter)
+        .attr("height", 700)
         .attr("class", "bubble");
 
      var nodes = d3.hierarchy(dataset)
@@ -53,7 +53,7 @@ class Bubble {
     node.append("circle")
         .attr("r", function(d) {
             return d.r;
-        })
+        }).attr('fill', '#555555')
     node.append("text")
         .attr("dy", ".3em")
         .style("text-anchor", "middle")
@@ -109,7 +109,7 @@ class Bubble {
               var index = selectedIndices.indexOf(i);
               selectedIndices.splice(index, index+1);
               selectedMajors.splice(index, index+1);
-              bc.selectedElement.attr('fill', '#000000');
+              bc.selectedElement.attr('fill', '#555555');
             } else {
               console.log('adding');
               bc.selectedDatum = d;
