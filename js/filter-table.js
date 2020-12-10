@@ -146,11 +146,14 @@ function filterSchools() {
     for (i = 0; i < tr.length; i++) {
         school = tr[i]
         txtValue = school.textContent || school.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        if (txtValue.toUpperCase().indexOf(filter) > -1 && school.style['display'] == '') {
             tr[i].style.display = ''
         } else {
             tr[i].style.display = 'none';
         }
+    }
+    if (filter == ''){
+      performFilter();
     }
 }
 
@@ -184,6 +187,7 @@ function performFilter() {
             currTr.style.display = '';
         }
     }
+    mapFilter();
 }
 
 function putAllBackInTable() {
@@ -196,20 +200,30 @@ function putAllBackInTable() {
 }
 
 let selectedRegions = {Southern:true, Northeastern:true, Midwestern:true, Western:true, California:true};
+let selRegions = Object.keys(selectedRegions);
 function filterMapSchools(region){
-  sel = d3.select('#schools-table').selectAll('tr.'+region)
+  performFilter();
   if(selectedRegions[region]){
-    sel.style('display', 'none')
     selectedRegions[region] = false;
   }
   else{
-    sel.style('display', '')
     selectedRegions[region] = true;
   }
-  if(selectedRegions[region]){
-    d3.selectAll("." + region).style('fill', 'lightskyblue')
+  performFilter();
+}
 
-  }else{
-    d3.selectAll("." + region).style('fill', 'darksalmon')
+function mapFilter(){
+  for(let i =0; i < 5; i++){
+    region = selRegions[i]
+    sel = d3.select('#schools-table').selectAll('tr.'+region)
+    if(!selectedRegions[region]){
+      sel.style('display', 'none')
+    }
+    if(selectedRegions[region]){
+      d3.selectAll("." + region).style('fill', 'lightblue')
+
+    }else{
+      d3.selectAll("." + region).style('fill', 'lightgray')
+    }
   }
 }
