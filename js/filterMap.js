@@ -5,7 +5,6 @@ class FilterMap{
   constructor(svg){
     var path = d3.geoPath();
     var stateNames = null;
-    //console.log("loading states")
     d3.csv("../data/stateNames.csv").then(function(nameData){
       stateNames = nameData;
       d3.json("../data/filterMap.json").then(function(us) {
@@ -13,11 +12,6 @@ class FilterMap{
           d.abr = stateNames[parseInt(d.id)].code
           d.name = stateNames[parseInt(d.id)].name
         })
-        /*us.objects.states.geometries.forEach(function(d,i){
-          console.log(d.abr)
-          console.log(d.name)
-        })*/
-        //console.log('here')
         svg.append("g")
         .attr("class", "states")
         .attr("transform", "scale(.5)")
@@ -36,26 +30,20 @@ class FilterMap{
   }
 
   hoverRegion(region){
-    //console.log('in ' + region);
     if(selectedRegions[region]){
       d3.selectAll("." + region).style('fill', 'lightskyblue')
-
     }else{
       d3.selectAll("." + region).style('fill', 'gray')
     }
   }
   unhoverRegion(region){
-    //console.log('out ' + region)
     if(selectedRegions[region]){
       d3.selectAll("." + region).style('fill', 'lightblue')
-
     }else{
       d3.selectAll("." + region).style('fill', 'lightgray')
     }
   }
   selectRegion(region){
-    //console.log('sel ' + region)
-    //TODO: give this the filter class so it can call it. Add it to the constroctor
     filterMapSchools(region);
   }
 }
