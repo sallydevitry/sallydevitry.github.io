@@ -31,20 +31,20 @@ function showHideSchoolDetails(data) {
 
         textAndPic.append('a').style('font-weight', 'bold').style('font-size', '20px').attr('target', '_blank').attr('href', 'https://' + data.Website).text(data.Name)
         textAndPic.append('br')
-        textAndPic.append('text').text('Location: ')
-        textAndPic.append('text').text(data['City'] + ", " + data['State'])
+        textAndPic.append('text').text('Location: ').style('font-size', '14px')
+        textAndPic.append('a').attr('target', '_blank').attr('href', data['aboutLocation']).text(data['City'] + ", " + data['State']).style('font-size', '14px')
         textAndPic.append('br')
-        textAndPic.append('text').text("Student Population: ")
-        textAndPic.append('text').text(data['Student Population'])
+        textAndPic.append('text').text("Student Population: ").style('font-size', '14px')
+        textAndPic.append('text').text(data['Student Population']).style('font-size', '14px')
         textAndPic.append('br')
-        textAndPic.append('text').text("Average ACT score: ")
-        textAndPic.append('text').text(data['ACT Lower'] + "-" + data['ACT Upper'])
+        textAndPic.append('text').text("Average ACT score: ").style('font-size', '14px')
+        textAndPic.append('text').text(data['ACT Lower'] + "-" + data['ACT Upper']).style('font-size', '14px')
         textAndPic.append('br')
-        textAndPic.append('text').text("Acceptance rate: ")
-        textAndPic.append('text').text(data['Acceptance Rate'] + '%')
+        textAndPic.append('text').text("Acceptance rate: ").style('font-size', '14px')
+        textAndPic.append('text').text(data['Acceptance Rate'] + '%').style('font-size', '14px')
         textAndPic.append('br')
-        textAndPic.append('text').text("Net Cost: ")
-        textAndPic.append('text').text('$' + data['Net Price'])
+        textAndPic.append('text').text("Avg. grant aid: ").style('font-size', '14px')
+        textAndPic.append('text').text('$' + data['Average Grant Aid']).style('font-size', '14px')
         textAndPic.append('br')
 
         imgTd = schoolRow.append('td')
@@ -130,6 +130,10 @@ function showHideSchoolDetails(data) {
             .style('fill', 'none')
 
     }
+}
+
+function getTravelURL(city) {
+    return "https://wikitravel.org/en/"+city.replace(" ", "_")
 }
 
 function filterSchools() {
