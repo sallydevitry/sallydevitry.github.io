@@ -49,7 +49,7 @@ class Bubble {
       'data': row,
     }));
 
-    var diameter = 600;
+    var diameter = 750;
     var bubble = d3.pack(dataset)
         .size([diameter, diameter])
         .padding(1.5);
@@ -92,7 +92,20 @@ class Bubble {
         })
         .attr("fill", function(d,i) {
             return '#555555';
-        });
+        }).style('stroke', 'lightgray').style('stroke-width', 3).attr('z-index', 1001)
+
+        function mouseoverC() {
+          d3.select(this).select("circle").transition()
+              .duration(700)
+              .attr("r", function(d){return d.r*1.2});
+      }
+      
+      //hover opposite, to bring back to its original state 
+      function mouseoutC() {
+          d3.select(this).select("circle").transition()
+              .duration(750)
+          .attr("r", function(d){return d.r});
+      }
 
     // add major title inside of circle
     node.append("text")
@@ -103,7 +116,7 @@ class Bubble {
         })
         .attr("font-family", "sans-serif")
         .attr("font-size", function(d){
-            return d.r/5;
+            return d.r/4.5;
         })
         .attr("fill", "white");
 
@@ -128,20 +141,19 @@ class Bubble {
           // check if it's already in the array
             bc.selectedElement = d3.select(this).selectAll('circle');
             if (selectedIndices.includes(i)) {
-              console.log('removing');
               var index = selectedIndices.indexOf(i);
               selectedIndices.splice(index, index+1);
               selectedMajors.splice(index, index+1);
               bc.selectedElement.attr('fill', '#555555');
             } else {
-              console.log('adding');
               bc.selectedDatum = d;
               bc.selectedElement.attr('fill', color(i));
               selectedIndices.push(i);
               selectedMajors.push({data:bc.selectedDatum, index: i});
             }
             drawBarChart();
-        });
+        }).on("mouseover", mouseoverC)
+        .on("mouseout", mouseoutC);
 
     //*********************************************88
     // bar chart
@@ -166,6 +178,9 @@ class Bubble {
       .attr("dy", "-.35em")
       .style("text-anchor", "start");
 
+    d3.select('#barChartSvg').append('text').attr('x', 0).attr('y', 10).text('Yearly Salary($)').style('font-size', '11').style('font-weight', 'bold')
+    d3.select('#barChartSvg').append('text').attr('x', 440).attr('y', 495).text('Degree').style('font-size', '11').style('font-weight', 'bold')
+
     let yAxis = d3.axisLeft(yScale);
     d3.select('#yAxis')
       .attr("transform", `translate(${50}, 25)`)
@@ -184,7 +199,7 @@ class Bubble {
     g1.selectAll('rect')
       .data(selectedMajors).enter().append('rect')
       .attr('width', 20)
-      .attr('fill', (d) => lightenDarkenColor(color(d['index']), 30))
+      .attr('fill', (d) => lightenDarkenColor(color(d['index']), 50))
       .attr('x', (d,i) => 30 -1 + xScale.bandwidth()/2+ xScale.bandwidth()*i)
       .attr("height", function(d) {return 450-yScale(d['data']['data']['Starting Median Salary']); }) // always equal to 0
       .attr("y", function(d) { return 25 + yScale(d['data']['data']['Starting Median Salary']); })
@@ -196,10 +211,9 @@ class Bubble {
     g2.selectAll('rect')
       .data(selectedMajors).enter().append('rect')
       .attr('width', 20)
-      .attr('fill', (d) => lightenDarkenColor(color(d['index']), 20))
+      .attr('fill', (d) => lightenDarkenColor(color(d['index']), 40))
       .attr('x', (d,i) => 50 + xScale.bandwidth()/2+ xScale.bandwidth()*i)
       .attr("height", function(d) {
-        console.log(d);
         return 450-yScale(Number(d['data']['data']['data']['Mid-Career 10th Percentile Salary'].replace(/[^0-9.-]+/g,""))); }) // always equal to 0
       .attr("y", function(d) {return 25 + yScale(Number(d['data']['data']['data']['Mid-Career 10th Percentile Salary'].replace(/[^0-9.-]+/g,""))); })
       .append('title')
@@ -208,10 +222,9 @@ class Bubble {
     g3.selectAll('rect')
       .data(selectedMajors).enter().append('rect')
       .attr('width', 20)
-      .attr('fill', (d) => lightenDarkenColor(color(d['index']), 10))
+      .attr('fill', (d) => lightenDarkenColor(color(d['index']), 30))
       .attr('x', (d,i) => 50 + xScale.bandwidth()/2+ xScale.bandwidth()*i)
       .attr("height", function(d) {
-        console.log(d);
         return 450-1-yScale(Number(d['data']['data']['data']['Mid-Career 25th Percentile Salary'].replace(/[^0-9.-]+/g,""))-Number(d['data']['data']['data']['Mid-Career 10th Percentile Salary'].replace(/[^0-9.-]+/g,""))); }) // always equal to 0
       .attr("y", function(d) {return 25 + yScale(Number(d['data']['data']['data']['Mid-Career 25th Percentile Salary'].replace(/[^0-9.-]+/g,""))); })
       .append('title')
@@ -221,10 +234,9 @@ class Bubble {
     g4.selectAll('rect')
       .data(selectedMajors).enter().append('rect')
       .attr('width', 20)
-      .attr('fill', (d) => lightenDarkenColor(color(d['index']), 0))
+      .attr('fill', (d) => lightenDarkenColor(color(d['index']), 20))
       .attr('x', (d,i) => 50 + xScale.bandwidth()/2+ xScale.bandwidth()*i)
       .attr("height", function(d) {
-        console.log(d);
         return 450-1-yScale(Number(d['data']['data']['data']['Mid-Career Median Salary'].replace(/[^0-9.-]+/g,""))-Number(d['data']['data']['data']['Mid-Career 25th Percentile Salary'].replace(/[^0-9.-]+/g,""))); }) // always equal to 0
       .attr("y", function(d) {return 25 + yScale(Number(d['data']['data']['data']['Mid-Career Median Salary'].replace(/[^0-9.-]+/g,""))); })
       .append('title')
@@ -234,10 +246,9 @@ class Bubble {
     g5.selectAll('rect')
       .data(selectedMajors).enter().append('rect')
       .attr('width', 20)
-      .attr('fill', (d) => lightenDarkenColor(color(d['index']), -10))
+      .attr('fill', (d) => lightenDarkenColor(color(d['index']), 10))
       .attr('x', (d,i) => 50 + xScale.bandwidth()/2+ xScale.bandwidth()*i)
       .attr("height", function(d) {
-        console.log(d);
         return 450-1-yScale(Number(d['data']['data']['data']['Mid-Career 75th Percentile Salary'].replace(/[^0-9.-]+/g,""))-Number(d['data']['data']['data']['Mid-Career Median Salary'].replace(/[^0-9.-]+/g,""))); }) // always equal to 0
       .attr("y", function(d) {return 25 + yScale(Number(d['data']['data']['data']['Mid-Career 75th Percentile Salary'].replace(/[^0-9.-]+/g,""))); })
       .append('title')
@@ -247,10 +258,9 @@ class Bubble {
     g6.selectAll('rect')
       .data(selectedMajors).enter().append('rect')
       .attr('width', 20)
-      .attr('fill', (d) => lightenDarkenColor(color(d['index']), -20))
+      .attr('fill', (d) => lightenDarkenColor(color(d['index']), -5))
       .attr('x', (d,i) => 50 + xScale.bandwidth()/2+ xScale.bandwidth()*i)
       .attr("height", function(d) {
-        console.log(d);
         return 450-1-yScale(Number(d['data']['data']['data']['Mid-Career 90th Percentile Salary'].replace(/[^0-9.-]+/g,""))-Number(d['data']['data']['data']['Mid-Career 75th Percentile Salary'].replace(/[^0-9.-]+/g,""))); }) // always equal to 0
       .attr("y", function(d) {return 25 + yScale(Number(d['data']['data']['data']['Mid-Career 90th Percentile Salary'].replace(/[^0-9.-]+/g,""))); })
       .append('title')

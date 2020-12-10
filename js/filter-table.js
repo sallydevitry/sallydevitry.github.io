@@ -152,7 +152,6 @@ function removeSchool(name) {
     if (schoolToRemoveExists) {
         d3.select(`#tr${stripSpaces(name)}`).remove()
         checkboxToUncheck = d3.select(`#check${stripSpaces(name)}`)
-        console.log(checkboxToUncheck)
         checkboxToUncheck.property('checked', false)
     }
 }
