@@ -23,13 +23,7 @@
 </head>
 
 <body>
-  <!-- <div style="background-color: rgba(32, 72, 126, 0.90)">
-    <h1 class="site-heading text-center text-white d-none d-lg-block">
-      <span class="site-heading-upper text-primary mb-2">Future</span>
-      <span class="site-heading-lower">Pathways</span>
-    </h1>
-  </div> -->
-
+  <!-- Site Heading -->
   <div class="w-100 site-subheading" style="background-color: rgba(32, 72, 126, 0.90)">
     <h1 class="site-heading text-center text-white">
       <span class="site-heading-upper text-primary mb-2">Future</span>
@@ -37,14 +31,17 @@
     </h1>
   </div>
 
-  <div style="background-color: white; border: double; border-radius: 10px; max-width: 500px; margin: auto; margin-bottom: 20px;">
-    <div style="padding: 20px; margin: auto; text-align: center;">The Future Pathways tool is built to guide people in their college and career decisions. Searching for various details of each school or career you consider can be frustrating and tedious. This page facilitates intuitive exploration of various colleges and careers, by offering most necessasry information accessible in one place.
+  <div
+    style="background-color: white; border: double; border-radius: 10px; max-width: 500px; margin: auto; margin-bottom: 20px;">
+    <div style="padding: 20px; margin: auto; text-align: center;">The Future Pathways tool is built to guide people in
+      their college and career decisions. Searching for various details of each school or career you consider can be
+      frustrating and tedious. This page facilitates intuitive exploration of various colleges and careers, by offering
+      most necessasry information accessible in one place.
     </div>
-    </div>
+  </div>
 
   <div class="w-100 site-subheading" style="background-color: rgba(32, 72, 126, 0.90)">
     <h3 class=" text-center text-white">
-      <!-- <span class="site-heading-upper text-primary mb-2">What Should I do with</span> -->
       <span class="site-heading-lower">College Exploration</span>
     </h3>
   </div>
@@ -131,7 +128,6 @@
         </div>
         <!-- Card Body -->
         <div class="card-body">
-
           <table class="table">
             <thead>
               <tr>
@@ -144,20 +140,12 @@
             <tbody id="school-deets-table">
             </tbody>
           </table>
-
-          <!-- <div class="flexRowSpace">
-            <p> </p>
-            <p style="padding-right: 35%; text-decoration: underline; font-size: 18px;">Salary Upon Exit</p>
-          </div>
-          <div id='school-details'>
-          </div> -->
         </div>
       </div>
     </div>
 
     <div class="w-100 site-subheading" style="background-color: rgba(32, 72, 126, 0.90)">
       <h3 class=" text-center text-white">
-        <!-- <span class="site-heading-upper text-primary mb-2">What Should I do with</span> -->
         <span class="site-heading-lower">Degree Exploration</span>
       </h3>
     </div>
@@ -177,17 +165,17 @@
             onkeyup="filterJobs()" placeholder="Search for Jobs..." aria-label="Search">
         </div>
         <div id="bubbleChart" class="card-body-bubble">
-            <svg width="900" height="900" id="bubbleSvg" class="bubble"></svg>
-        <div>
+          <svg width="900" height="900" id="bubbleSvg" class="bubble"></svg>
           <div>
-            <h2 style="padding-left: 15%;">Career Salary Statistics</h2>
-          </div>
+            <div>
+              <h2 style="padding-left: 15%;">Career Salary Statistics</h2>
+            </div>
             <svg width="500" height="600" id="barChartSvg">
-                <g id="xAxis"></g>
-                <g id="yAxis"></g>
-                <g id="bars"></g>
+              <g id="xAxis"></g>
+              <g id="yAxis"></g>
+              <g id="bars"></g>
             </svg>
-      </div>
+          </div>
         </div>
       </div>
     </div>
@@ -195,8 +183,9 @@
 
   <footer class="footer text-faded text-center py-5">
     <div class="container">
-      <p class="m-0 small">CS5820 project by Sally D., Kaden H., and a little bit Jared L.</p>
-      <a class="m-0 small" href="https://youtu.be/Hqnaom5FGx8">Go to project video</a>
+      <p class="m-0"style="font-size: 30px"> Future Pathways Demo Video</p>
+      <p class="m-2 medium">CS5820 project by Sally D., Kaden H., and Jared L.</p>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/Hqnaom5FGx8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
   </footer>
 
@@ -210,8 +199,6 @@
   <script src="js/filter-table.js"></script>
   <script src="js/bubble.js"></script>
   <script src="js/main.js" onload="init()"></script>
-
-
 
 </body>
 

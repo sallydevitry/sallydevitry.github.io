@@ -347,15 +347,14 @@ line{
 }
 
   .my-btn {
-    background-color: rgb(169, 41, 41); /* Blue background */
-    border: none; /* Remove borders */
+    background-color: rgb(169, 41, 41);
+    border: none;
     border-radius: 10%;
-    color: white; /* White text */
-    font-size: 16px; /* Set a font size */
-    cursor: pointer; /* Mouse pointer on hover */
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
   }
-  
-  /* Darker background on mouse-over */
+
   .my-btn:hover {
     background-color: darkred;
   }

@@ -1,11 +1,13 @@
 function drawTable(rankData) {
 
+    //formats number to currency
     var formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
         minimumFractionDigits: 0
       });
 
+    //make a row in the schools table for each data item
     rankData.forEach(function (d) {
         schoolName = d.Name
         schoolRank = d.Rank
@@ -23,8 +25,8 @@ function stripSpaces(schoolName) {
     return schoolName.split(" ").join("")
 }
 
+//called when a school checkbox is clicked, removes or shows the school details row
 function showHideSchoolDetails(data) {
-
     var formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
@@ -32,16 +34,17 @@ function showHideSchoolDetails(data) {
       });
 
     var schoolToRemoveExists = document.getElementById(`tr${stripSpaces(data.Name)}`)
-
     if (schoolToRemoveExists) {
+        //remove the school details row
         d3.select(`#tr${stripSpaces(data.Name)}`).remove()
     }
     else {
-
+        //add the school details row
         schoolDeetsTable = d3.select('#school-deets-table')
         schoolRow = schoolDeetsTable.append('tr').attr('id',`tr${stripSpaces(data.Name)}`)
         textAndPic = schoolRow.append('td')
 
+        //add the text details and picture to a cell
         textAndPic.append('a').style('font-weight', 'bold').style('font-size', '20px').attr('target', '_blank').attr('href', 'https://' + data.Website).text(data.Name)
         textAndPic.append('br')
         textAndPic.append('text').text('Location: ').style('font-size', '14px')
@@ -63,6 +66,7 @@ function showHideSchoolDetails(data) {
         imgTd = schoolRow.append('td')
         imgTd.append('a').attr('target', '_blank').attr('href', 'https://' + data.Website).append('img').attr('src', `../img/${stripSpaces(data.Name)}.jpg`).attr('class', 'school-imgs')
 
+        //add the box plot to a cell
         chartTr = schoolRow.append('td').attr('class', 'boxPlot')
 
         var q1 = parseFloat(data['Mid-Career 25th Percentile Salary'].replace(/\$|,/g, ''))
@@ -145,6 +149,7 @@ function showHideSchoolDetails(data) {
     }
 }
 
+//remove school function called when 'x' delete row button is pressed
 function removeSchool(name) {
     var schoolToRemoveExists = document.getElementById(`tr${stripSpaces(name)}`)
 
@@ -155,7 +160,7 @@ function removeSchool(name) {
     }
 }
 
-
+//called when searching
 function filterSchools() {
     performFilter()
     var input, filter, tr, school, i, txtValue;
@@ -177,6 +182,7 @@ function filterSchools() {
     }
 }
 
+//called when selections change in the filtering
 function performFilter() {
     putAllBackInTable()
     var typeOfSchool = stripSpaces(document.getElementById('type-select').value);
