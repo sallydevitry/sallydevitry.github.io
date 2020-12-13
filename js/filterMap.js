@@ -1,7 +1,6 @@
+// A class to manage and display a clickable map of regions
 class FilterMap{
-
-
-
+  // input: an svg selection of where you want the map
   constructor(svg){
     var path = d3.geoPath();
     var stateNames = null;
@@ -29,6 +28,7 @@ class FilterMap{
     })
   }
 
+  // These three function handle hovering and selecting regions
   hoverRegion(region){
     if(selectedRegions[region]){
       d3.selectAll("." + region).style('fill', 'lightskyblue')
@@ -43,6 +43,7 @@ class FilterMap{
       d3.selectAll("." + region).style('fill', 'lightgray')
     }
   }
+  // Calls the filter function with the selected region
   selectRegion(region){
     filterMapSchools(region);
   }

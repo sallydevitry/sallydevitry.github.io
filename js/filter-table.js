@@ -1,3 +1,4 @@
+// draws the table with the list of schools
 function drawTable(rankData) {
 
     //formats number to currency
@@ -21,6 +22,7 @@ function drawTable(rankData) {
         tableRow.append('td').append('text').attr('class', 'school-tuition').text(schoolTuition)
     })
 }
+// formats school names to play nicely
 function stripSpaces(schoolName) {
     return schoolName.split(" ").join("")
 }
@@ -216,6 +218,8 @@ function performFilter() {
     mapFilter();
 }
 
+// does this need explaining?
+// Use this to put every school back in the table
 function putAllBackInTable() {
     schoolsTable = document.getElementById('schools-table');
     tr = schoolsTable.getElementsByTagName("tr")
@@ -225,8 +229,10 @@ function putAllBackInTable() {
     }
 }
 
+// keeps track of which regions are shown or not
 let selectedRegions = {Southern:true, Northeastern:true, Midwestern:true, Western:true, California:true};
 let selRegions = Object.keys(selectedRegions);
+// filters the schools based on selected regions, then calls the main filter function
 function filterMapSchools(region){
   performFilter();
   if(selectedRegions[region]){
@@ -237,7 +243,7 @@ function filterMapSchools(region){
   }
   performFilter();
 }
-
+// toggles the selected region in selectedRegions
 function mapFilter(){
   for(let i =0; i < 5; i++){
     region = selRegions[i]

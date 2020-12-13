@@ -1,5 +1,9 @@
+// The filter map stored for easy debugging
 var fMap;
+// the rank data stored for easy debugging
 var rData;
+
+// loads data, then draws charts, graphs, tables, and filter options
 function init() {
     var rankData = null
     //load the data from csvs
