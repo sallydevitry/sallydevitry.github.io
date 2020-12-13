@@ -1,3 +1,4 @@
+// lightens or darkens colors for colored grouped stacked bar chart
 function lightenDarkenColor(col, amt) {
 
     var usePound = false;
@@ -27,20 +28,30 @@ function lightenDarkenColor(col, amt) {
     return (usePound?"#":"") + (g | (b << 8) | (r << 16)).toString(16);
 }
 
+
+// contains grouped bubble chart and bar chart
 class Bubble {
   constructor() {
   }
 
   draw(raw_dataset) {
+    // arrays to hold selected bubbles data
     var selectedMajors = [];
     var selectedIndices = [];
+
+    // draw default bubble chart
     drawBarChart();
+
+    // colors of selected bubbles
     var color = d3.scaleOrdinal(d3.schemeCategory10);
+    // turns numbers into dollars
     var formatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
       minimumFractionDigits: 0
     });
+	  
+    // create dataset according to bubble formatting
     var dataset = new Object();
     dataset['children'] = [];
     raw_dataset.forEach((row) => dataset['children'].push({
@@ -141,33 +152,39 @@ class Bubble {
           // check if it's already in the array
             bc.selectedElement = d3.select(this).selectAll('circle');
             if (selectedIndices.includes(i)) {
+	      // remove and set back to gray
               var index = selectedIndices.indexOf(i);
               selectedIndices.splice(index, index+1);
               selectedMajors.splice(index, index+1);
               bc.selectedElement.attr('fill', '#555555');
             } else {
+	      // add and pick color according to index
               bc.selectedDatum = d;
               bc.selectedElement.attr('fill', color(i));
               selectedIndices.push(i);
               selectedMajors.push({data:bc.selectedDatum, index: i});
             }
+            // update the chart
             drawBarChart();
         }).on("mouseover", mouseoverC)
-        .on("mouseout", mouseoutC);
+        .on("mouseout", mouseoutC); // grow on mouseover
 
     //*********************************************88
     // bar chart
     //*********************************************88
     function drawBarChart() {
     d3.select('#bars').selectAll('rect').remove();
+	 // majors for the x axis
     let xScale = d3.scaleBand()
       .domain(selectedMajors.map(x => x['data']['data']['Undergraduate Major']))
       .range([0, 400])
 
+	    // dollar amount for the y axis
     let yScale = d3.scaleLinear()
       .domain([0, 200000])
       .range([450, 0 ]);
 
+	    // align the axis
     let xAxis = d3.axisBottom(xScale);
     d3.select('#xAxis')
       .attr("transform", `translate(${50}, ${475})`)
@@ -178,16 +195,18 @@ class Bubble {
       .attr("dy", "-.35em")
       .style("text-anchor", "start");
 
+	    // titles
     d3.select('#barChartSvg').append('text').attr('x', 0).attr('y', 10).text('Yearly Salary($)').style('font-size', '11').style('font-weight', 'bold')
     d3.select('#barChartSvg').append('text').attr('x', 440).attr('y', 495).text('Degree').style('font-size', '11').style('font-weight', 'bold')
 
+	    // align the y axis
     let yAxis = d3.axisLeft(yScale);
     d3.select('#yAxis')
       .attr("transform", `translate(${50}, 25)`)
       .call(yAxis)
       .selectAll("text");
 
-    // display the starting median bars
+	    // g's for every gorup - starting, 10th, 25th, median, etc.
     let bars = d3.select('#bars');
     let g1 = bars.append('g');
     let g2 = bars.append('g');
@@ -196,6 +215,7 @@ class Bubble {
     let g5 = bars.append('g');
     let g6 = bars.append('g');
 
+    // display the starting median bars
     g1.selectAll('rect')
       .data(selectedMajors).enter().append('rect')
       .attr('width', 20)
@@ -219,6 +239,7 @@ class Bubble {
       .append('title')
       .text((d) => `Mid Career 10th Percentile\n${formatter.format(d['data']['data']['data']['Mid-Career 10th Percentile Salary'].replace(/[^0-9.-]+/g,""))}`)
 
+	    // 25th percentile salaries
     g3.selectAll('rect')
       .data(selectedMajors).enter().append('rect')
       .attr('width', 20)
@@ -231,6 +252,7 @@ class Bubble {
       .text((d) => `Mid Career 25th Percentile\n${formatter.format(d['data']['data']['data']['Mid-Career 25th Percentile Salary'].replace(/[^0-9.-]+/g,""))}`)
 
 
+	    // median salaries
     g4.selectAll('rect')
       .data(selectedMajors).enter().append('rect')
       .attr('width', 20)
@@ -243,6 +265,7 @@ class Bubble {
       .text((d) => `Mid Career Median\n${formatter.format(d['data']['data']['data']['Mid-Career Median Salary'].replace(/[^0-9.-]+/g,""))}`)
 
 
+	    // 75th percentile
     g5.selectAll('rect')
       .data(selectedMajors).enter().append('rect')
       .attr('width', 20)
@@ -255,6 +278,7 @@ class Bubble {
       .text((d) => `Mid Career 75th Percentile\n${formatter.format(d['data']['data']['data']['Mid-Career 75th Percentile Salary'].replace(/[^0-9.-]+/g,""))}`)
 
 
+	    // 90th percentile bars
     g6.selectAll('rect')
       .data(selectedMajors).enter().append('rect')
       .attr('width', 20)
